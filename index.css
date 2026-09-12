@@ -1,0 +1,37 @@
+.navbar {
+
+    background-color: #7a0000e9 !important;
+    padding: 1rem 10rem;
+    height: 100px;
+    box-sizing: border-box;
+
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 3rem;
+}
+
+.nav-link {
+    color: #ffffff !important;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    font-size-adjust: auto;
+    letter-spacing: 0.5px;
+}
+
+.nav-link:hover {
+    color: #989898 !important;
+}
+
+.form-control {
+    width: 300px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1rem;
+}
