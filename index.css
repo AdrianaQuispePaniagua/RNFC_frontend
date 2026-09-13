@@ -1,7 +1,7 @@
 .navbar {
 
-    background-color: #7a0000e9 !important;
-    padding: 1rem 10rem;
+    background-color: #c00000f6 !important;
+    padding: 1rem 7rem;
     height: 100px;
     box-sizing: border-box;
 
@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    gap: 3rem;
+    gap: 1rem;
 }
 
 .nav-link {
@@ -34,4 +34,36 @@
     border-radius: 20px;
     border: none;
     font-size: 1rem;
+}
+
+.hero-seccion {
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 4rem 5rem;
+    text-align: center;
+    background-image: url('assets/hero-image.jpg');
+    background-size: cover;
+    background-position: center;
+
+}
+
+.hero-texto-container {
+    gap: 1rem;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.features-seccion {
+    background-color: #140083e3;
+    color: #ffffff;
+    padding: 4rem 5rem;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
 }
