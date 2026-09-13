@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jugadores | RNFC</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    :root {
+      --rnfc-red: #c00000f6;
+      --rnfc-red-hover: #9a0000;
+    }
+    
+    .rnfc-navbar {
+      background-color: var(--rnfc-red) !important;
+      padding: 1rem 7rem;
+      min-height: 100px;
+      box-sizing: border-box;
+    }
+    
+    .rnfc-navbar .nav-link {
+      color: #ffffff !important;
+      font-weight: 600;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    
+    .rnfc-navbar .nav-link:hover { color: #989898 !important; }
+
+    .bg-rnfc-red { background-color: var(--rnfc-red) !important; color: white; }
+    .text-rnfc-red { color: var(--rnfc-red) !important; }
+    
+    .btn-rnfc-red {
+      background-color: var(--rnfc-red) !important;
+      color: white;
+      border-color: var(--rnfc-red) !important;
+    }
+    
+    .btn-rnfc-red:hover { background-color: var(--rnfc-red-hover) !important; color: white; }
+    
+    .btn-outline-rnfc { color: var(--rnfc-red) !important; border-color: var(--rnfc-red) !important; }
+    .btn-outline-rnfc:hover { background-color: var(--rnfc-red) !important; color: white !important; }
+
+    .features-seccion {
+      background-color: #140083e3;
+      color: #ffffff;
+    }
+
+    .player-card { transition: transform 0.2s; }
+    .player-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+    @media (max-width: 768px) {
+      .rnfc-navbar { padding: 1rem 1.5rem; }
+    }
+  </style>
+</head>
+<body class="bg-body-secondary">
+
+  <!-- Barra de Navegación -->
+  <header>
+    <nav class="navbar navbar-expand-lg rnfc-navbar navbar-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+          <img src="assets/escudo_rnfc.png" alt="Logo RNFC" width="80" height="80" class="d-inline-block align-text-top" onerror="this.src='escudo_rnfc.png'">
+          <span class="fs-4 ms-2">Jugadores</span>
+        </a>
+
+        <div class="d-flex align-items-center gap-3 ms-auto">
+          <!-- Botón de Inicio -->
+          <a href="index.html" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-house-door-fill me-1"></i>Inicio
+          </a>
+
+          <!-- Información de Sesión -->
+          <span class="text-white small fw-bold" id="navInfoUsuario"></span>
+
+          <!-- Botón de Carrito -->
+          <button class="btn btn-outline-light position-relative d-none" id="btnAbrirCarrito" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
+            <i class="bi bi-cart3 fs-5"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark" id="badgeCarrito">0</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="container py-4">
+    
+    <!-- Panel de Filtros -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body features-seccion rounded p-4">
+        
+        <!-- Controles de Filtrado -->
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">Buscar Jugador</label>
+            <input type="text" class="form-control rounded-pill px-3" id="filtroTexto" placeholder="Nombre...">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">Club</label>
+            <select class="form-select rounded-pill px-3" id="filtroClub">
+              <option value="TODOS">Todos</option>
+              <!-- Llenado dinámicamente -->
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">País de Origen</label>
+            <select class="form-select rounded-pill px-3" id="filtroPais">
+              <option value="TODOS">Todos</option>
+              <!-- Llenado dinámicamente -->
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">Posición</label>
+            <select class="form-select rounded-pill px-3" id="filtroPosicion">
+              <option value="TODOS">Todas</option>
+              <option value="Portero">Portero</option>
+              <option value="Defensa">Defensa</option>
+              <option value="Mediocampista">Mediocampista</option>
+              <option value="Delantero">Delantero</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">Pie Dominante</label>
+            <select class="form-select rounded-pill px-3" id="filtroPie">
+              <option value="TODOS">Todos</option>
+              <option value="Diestro">Diestro</option>
+              <option value="Zurdo">Zurdo</option>
+              <option value="Ambidiestro">Ambidiestro</option>
+            </select>
+          </div>
+          <div class="col-md-2 d-flex align-items-center mb-2">
+            <div class="form-check form-switch fs-5">
+              <input class="form-check-input" type="checkbox" id="filtroDisponible" checked>
+              <label class="form-check-label fs-6 text-white ms-2 pt-1 fw-bold" for="filtroDisponible">Solo transferibles</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles de Ordenamiento -->
+        <div class="col-md-3">
+                <label class="form-label small fw-bold"><i class="bi bi-sort-down me-1"></i>Ordenar resultados por:</label>
+                <select class="form-select rounded-pill px-3" id="filtroOrden">
+                  <option value="defecto">Por Defecto</option>
+                  <option value="edadAsc">Edad (Menor a Mayor)</option>
+                  <option value="edadDesc">Edad (Mayor a Menor)</option>
+                  <option value="valorAsc">Valor Pase (Menor a Mayor)</option>
+                  <option value="valorDesc">Valor Pase (Mayor a Menor)</option>
+                  <option value="paisAsc">País de Origen (A-Z)</option>
+                  <option value="paisDesc">País de Origen (Z-A)</option>
+                </select>
+            </div>
+
+      </div>
+    </div>
+
+    <!-- Encabezado de la Grilla -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 fw-bold mb-0">Mercado de Jugadores</h2>
+      <button class="btn btn-rnfc-red d-none" id="btnRegistrarJugador" data-bs-toggle="modal" data-bs-target="#modalRegistrarJugador">
+        <i class="bi bi-person-plus-fill me-1"></i>Registrar Jugador
+      </button>
+    </div>
+
+    <!-- Grilla de Jugadores -->
+    <div class="row g-4" id="contenedorJugadores">
+      <!-- Generado dinámicamente -->
+    </div>
+  </main>
+
+  <!-- Modal de Registro de Jugador -->
+  <div class="modal fade" id="modalRegistrarJugador" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold"><i class="bi bi-person-plus-fill text-rnfc-red me-2"></i>Registrar Nuevo Jugador</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formRegistrarJugador">
+            <div class="mb-3">
+              <label class="form-label">Nombre completo</label>
+              <input type="text" class="form-control" id="nuevoNombre" required>
+            </div>
+            
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label">Edad</label>
+                <input type="number" class="form-control" id="nuevoEdad" min="15" max="45" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Posición</label>
+                <select class="form-select" id="nuevoPosicion" required>
+                  <option value="Portero">Portero</option>
+                  <option value="Defensa">Defensa</option>
+                  <option value="Mediocampista">Mediocampista</option>
+                  <option value="Delantero">Delantero</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row g-3 mt-0">
+              <div class="col-6">
+                <label class="form-label">Pie Dominante</label>
+                <select class="form-select" id="nuevoPie" required>
+                  <option value="Diestro">Diestro</option>
+                  <option value="Zurdo">Zurdo</option>
+                  <option value="Ambidiestro">Ambidiestro</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label">País de Origen</label>
+                <input type="text" class="form-control" id="nuevoPais" placeholder="Ej: Chile" required>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label class="form-label">Valor de Pase (CLP)</label>
+              <input type="number" class="form-control" id="nuevoPrecio" min="0" step="100000" required>
+            </div>
+            
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="nuevoTransferible">
+              <label class="form-check-label" for="nuevoTransferible">Disponible para transferencia</label>
+            </div>
+          </form>
+          <div class="alert alert-info mt-3 small mb-0 py-2">
+            <i class="bi bi-info-circle me-1"></i>El dorsal será asignado automáticamente según disponibilidad.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-rnfc-red" id="btnGuardarJugador">Guardar Jugador</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas del Carrito -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-bold"><i class="bi bi-cart-check-fill text-rnfc-red me-2"></i>Fichajes Pendientes</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="listaCarrito" class="flex-grow-1 overflow-auto"></div>
+      <div class="border-top pt-3 mt-3">
+        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+          <span>Total Inversión:</span>
+          <span id="totalCarrito">$0</span>
+        </div>
+        <button class="btn btn-rnfc-red w-100 py-2 fw-bold" id="btnConfirmarCompra">Confirmar Fichajes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/seeders.js"></script>
+
+  <script>
+    /**
+     * @constant {string} KEY_SESION
+     * @description Identificador para guardar y leer la sesión en sessionStorage.
+     */
+    const KEY_SESION = "rnfc_sesion";
+    
+    let usuarioActual = null;
+    let rolActual = "visita";
+
+    /**
+     * @function leerSesion
+     * @description Recupera los datos del usuario activo desde sessionStorage.
+     */
+    function leerSesion() {
+      try {
+        const s = JSON.parse(sessionStorage.getItem(KEY_SESION));
+        if (s && s.rol) {
+          usuarioActual = s;
+          rolActual = s.rol;
+        }
+      } catch (e) {
+        console.warn("No hay sesión activa, modo visita.");
+      }
+    }
+
+    /**
+     * @function pintarInfoSesion
+     * @description Configura la interfaz visual basándose en el rol del usuario (Visita o Agente).
+     */
+    function pintarInfoSesion() {
+      const navInfoUsuario = document.getElementById("navInfoUsuario");
+      const btnAbrirCarrito = document.getElementById("btnAbrirCarrito");
+      const btnRegistrarJugador = document.getElementById("btnRegistrarJugador");
+
+      if (rolActual === "agente" && usuarioActual) {
+        btnAbrirCarrito.classList.remove("d-none");
+        btnRegistrarJugador.classList.remove("d-none");
+
+        let nombreClub = "";
+        if (usuarioActual.clubId != null) {
+          const club = obtenerClubPorId(usuarioActual.clubId);
+          if (club) nombreClub = club.nombreCorto;
+        }
+        navInfoUsuario.textContent = nombreClub
+          ? `${usuarioActual.nombre} · ${nombreClub}`
+          : usuarioActual.nombre;
+
+      } else if (rolActual === "visita" && usuarioActual) {
+        navInfoUsuario.textContent = usuarioActual.nombre;
+      } else {
+        navInfoUsuario.textContent = "Visita";
+      }
+    }
+
+    /**
+     * @function obtenerDorsalDisponible
+     * @description Busca y retorna el primer número de camiseta libre en la plantilla.
+     * @param {Array} plantilla - Arreglo de jugadores del club.
+     * @returns {number} Número de dorsal disponible.
+     */
+    function obtenerDorsalDisponible(plantilla) {
+      const ocupados = plantilla.map(j => j.dorsal).sort((a, b) => a - b);
+      let nuevoDorsal = 1;
+      
+      for (let i = 0; i < ocupados.length; i++) {
+        if (ocupados[i] === nuevoDorsal) {
+          nuevoDorsal++;
+        }
+      }
+      return nuevoDorsal;
+    }
+
+    /**
+     * Evento principal que inicializa el catálogo al cargar el DOM.
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+      leerSesion();
+      pintarInfoSesion();
+
+      let clubesData = [];
+      let mercado = [];
+      let carrito = [];
+      let paisesUnicos = new Set(); 
+
+      const contenedor = document.getElementById("contenedorJugadores");
+      const badgeCarrito = document.getElementById("badgeCarrito");
+      const listaCarrito = document.getElementById("listaCarrito");
+      const totalCarrito = document.getElementById("totalCarrito");
+
+      /**
+       * @function prepararMercado
+       * @description Carga datos base, genera atributos faltantes y llena los selectores de filtro.
+       */
+      function prepararMercado() {
+        clubesData = obtenerClubes();
+        let seGeneraronDatosNuevos = false;
+
+        clubesData.forEach(club => {
+          club.plantilla.forEach(jugador => {
+            if (jugador.pie === undefined) {
+              const pies = ["Diestro", "Zurdo", "Ambidiestro"];
+              jugador.pie = pies[Math.floor(Math.random() * pies.length)];
+              jugador.disponible = Math.random() > 0.4;
+              jugador.precio = Math.floor(Math.random() * 30 + 5) * 100000;
+              jugador.clubActualId = club.id;
+              jugador.clubNombre = club.nombreCorto;
+              seGeneraronDatosNuevos = true;
+            }
+            
+            // Normalización de la variable nacionalidad a país de origen
+            if(jugador.nacionalidad && !jugador.paisOrigen){
+                jugador.paisOrigen = jugador.nacionalidad;
+            }
+
+            mercado.push(jugador);
+            paisesUnicos.add(jugador.paisOrigen);
+          });
+        });
+
+        if (seGeneraronDatosNuevos) {
+          localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
+        }
+
+        // Llenar selector de Clubes
+        const selectClub = document.getElementById("filtroClub");
+        selectClub.innerHTML = '<option value="TODOS">Todos</option>';
+        clubesData.forEach(c => {
+          const option = document.createElement("option");
+          option.value = c.id;
+          option.textContent = c.nombreCorto;
+          selectClub.appendChild(option);
+        });
+
+        // Llenar selector de Países
+        const selectPais = document.getElementById("filtroPais");
+        selectPais.innerHTML = '<option value="TODOS">Todos</option>';
+        Array.from(paisesUnicos).sort().forEach(pais => {
+            if(pais){
+                const option = document.createElement("option");
+                option.value = pais;
+                option.textContent = pais;
+                selectPais.appendChild(option);
+            }
+        });
+      }
+
+      /**
+       * @function renderizarMercado
+       * @description Evalúa los filtros activos, ordena la lista y renderiza las tarjetas de jugadores.
+       */
+      function renderizarMercado() {
+        const texto = document.getElementById("filtroTexto").value.toLowerCase();
+        const posicion = document.getElementById("filtroPosicion").value;
+        const pie = document.getElementById("filtroPie").value;
+        const clubId = document.getElementById("filtroClub").value;
+        const paisFiltro = document.getElementById("filtroPais").value;
+        const soloTransferibles = document.getElementById("filtroDisponible").checked;
+        const orden = document.getElementById("filtroOrden").value;
+
+        contenedor.innerHTML = "";
+
+        // 1. Filtrado de datos
+        let filtrados = mercado.filter(j => {
+          const pasaTexto = j.nombre.toLowerCase().includes(texto) || (j.paisOrigen && j.paisOrigen.toLowerCase().includes(texto));
+          const pasaPosicion = posicion === "TODOS" || j.posicion === posicion;
+          const pasaPie = pie === "TODOS" || j.pie === pie;
+          const pasaClub = clubId === "TODOS" || j.clubActualId === Number(clubId);
+          const pasaPais = paisFiltro === "TODOS" || j.paisOrigen === paisFiltro;
+          const pasaDisp = !soloTransferibles || j.disponible === true;
+          
+          return pasaTexto && pasaPosicion && pasaPie && pasaClub && pasaDisp && pasaPais;
+        });
+
+        // 2. Ordenamiento de datos
+        filtrados.sort((a, b) => {
+            switch(orden){
+                case 'edadAsc':
+                    return a.edad - b.edad;
+                case 'edadDesc':
+                    return b.edad - a.edad;
+                case 'valorAsc':
+                    return a.precio - b.precio;
+                case 'valorDesc':
+                    return b.precio - a.precio;
+                case 'paisAsc':
+                    return (a.paisOrigen || "").localeCompare(b.paisOrigen || "");
+                case 'paisDesc':
+                    return (b.paisOrigen || "").localeCompare(a.paisOrigen || "");
+                default:
+                    return 0;
+            }
+        });
+
+        if (filtrados.length === 0) {
+          contenedor.innerHTML = `<div class="col-12 text-center text-secondary py-5"><h5>No se encontraron jugadores con esos filtros.</h5></div>`;
+          return;
+        }
+
+        // 3. Renderizado en el DOM
+        filtrados.forEach(j => {
+          const mostrarBtnCompra = rolActual === "agente" && !!usuarioActual &&
+            j.disponible && j.clubActualId !== usuarioActual.clubId;
+          const enCarrito = carrito.some(item => item.id === j.id);
+
+          const col = document.createElement("div");
+          col.className = "col-md-6 col-lg-4 col-xl-3";
+
+          col.innerHTML = `
+            <div class="card h-100 player-card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="badge bg-rnfc-red">${j.posicion}</span>
+                  ${j.disponible ? '<span class="badge bg-success">Transferible</span>' : '<span class="badge bg-secondary">No Transferible</span>'}
+                </div>
+                <h5 class="card-title fw-bold mb-0">${j.nombre} <span class="text-secondary ms-1">#${j.dorsal}</span></h5>
+                <p class="text-secondary small mb-2">${j.clubNombre} · ${j.paisOrigen}</p>
+
+                <ul class="list-group list-group-flush small mb-3">
+                  <li class="list-group-item px-0 d-flex justify-content-between"><span>Pie Dominante:</span> <strong>${j.pie}</strong></li>
+                  <li class="list-group-item px-0 d-flex justify-content-between"><span>Edad:</span> <strong>${j.edad} años</strong></li>
+                  <li class="list-group-item px-0 d-flex justify-content-between text-success">
+                    <span>Valor de Pase:</span> <strong>$${j.precio.toLocaleString('es-CL')}</strong>
+                  </li>
+                </ul>
+
+                ${mostrarBtnCompra ?
+                  `<button class="btn w-100 fw-bold ${enCarrito ? 'btn-secondary disabled' : 'btn-outline-rnfc'} btn-comprar" data-id="${j.id}">
+                    ${enCarrito ? '<i class="bi bi-check-lg"></i> En el carrito' : '<i class="bi bi-cart-plus"></i> Fichar'}
+                  </button>`
+                  : ''
+                }
+              </div>
+            </div>
+          `;
+          contenedor.appendChild(col);
+        });
+
+        document.querySelectorAll(".btn-comprar").forEach(btn => {
+          btn.addEventListener("click", (e) => agregarAlCarrito(Number(e.currentTarget.dataset.id)));
+        });
+      }
+
+      /**
+       * @function agregarAlCarrito
+       * @description Ingresa un jugador a la lista de fichajes pendientes.
+       * @param {number} id - ID del jugador.
+       */
+      function agregarAlCarrito(id) {
+        if (rolActual !== "agente" || !usuarioActual) return;
+        const jugador = mercado.find(j => j.id === id);
+        if (jugador && jugador.disponible && !carrito.some(item => item.id === id)) {
+          carrito.push(jugador);
+          actualizarCarrito();
+          renderizarMercado();
+        }
+      }
+
+      /**
+       * @function eliminarItem
+       * @description Remueve un jugador del carrito (expuesta en window para el onclick en línea).
+       * @param {number} id - ID del jugador.
+       */
+      window.eliminarItem = function (id) {
+        carrito = carrito.filter(item => item.id !== id);
+        actualizarCarrito();
+        renderizarMercado();
+      };
+
+      /**
+       * @function actualizarCarrito
+       * @description Refresca la interfaz del offcanvas calculando los totales de la compra.
+       */
+      function actualizarCarrito() {
+        badgeCarrito.textContent = carrito.length;
+        listaCarrito.innerHTML = "";
+        let suma = 0;
+
+        if (carrito.length === 0) {
+          listaCarrito.innerHTML = `<p class="text-center text-secondary mt-4">Tu carrito de fichajes está vacío.</p>`;
+        } else {
+          carrito.forEach(j => {
+            suma += j.precio;
+            const div = document.createElement("div");
+            div.className = "d-flex justify-content-between align-items-center mb-3 border-bottom pb-2";
+            div.innerHTML = `
+              <div>
+                <h6 class="mb-0 fw-bold">${j.nombre}</h6>
+                <small class="text-secondary">${j.posicion}</small><br>
+                <span class="text-success small fw-bold">$${j.precio.toLocaleString('es-CL')}</span>
+              </div>
+              <button class="btn btn-sm btn-outline-danger border-0" onclick="window.eliminarItem(${j.id})"><i class="bi bi-trash3"></i></button>
+            `;
+            listaCarrito.appendChild(div);
+          });
+        }
+        totalCarrito.textContent = `$${suma.toLocaleString('es-CL')}`;
+      }
+
+      /**
+       * Listener del botón de confirmación de compra.
+       * Transfiere el jugador, asigna un nuevo dorsal y persiste los datos.
+       */
+      document.getElementById("btnConfirmarCompra").addEventListener("click", () => {
+        if (rolActual !== "agente" || !usuarioActual) return;
+        if (carrito.length === 0) return alert("Agrega jugadores al carrito primero.");
+        if (usuarioActual.clubId == null) {
+          alert("Tu sesión no tiene un club asignado.");
+          return;
+        }
+
+        const clubComprador = clubesData.find(c => c.id === usuarioActual.clubId);
+        if (!clubComprador) return;
+
+        carrito.forEach(jugadorComprado => {
+          // Remover jugador de la plantilla de origen
+          clubesData.forEach(club => {
+            club.plantilla = club.plantilla.filter(j => j.id !== jugadorComprado.id);
+          });
+
+          jugadorComprado.dorsal = obtenerDorsalDisponible(clubComprador.plantilla);
+          jugadorComprado.disponible = false;
+          jugadorComprado.clubActualId = clubComprador.id;
+          jugadorComprado.clubNombre = clubComprador.nombreCorto;
+          clubComprador.plantilla.push(jugadorComprado);
+        });
+
+        localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
+
+        alert("¡Fichajes confirmados exitosamente! Se han asignado los dorsales automáticamente según disponibilidad.");
+        carrito = [];
+        actualizarCarrito();
+        renderizarMercado();
+
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('carritoOffcanvas'));
+        bsOffcanvas.hide();
+      });
+
+      /**
+       * Listener del formulario de registro de un nuevo jugador.
+       */
+      document.getElementById("btnGuardarJugador").addEventListener("click", () => {
+        if (rolActual !== "agente" || !usuarioActual) return;
+        if (usuarioActual.clubId == null) return;
+
+        const form = document.getElementById("formRegistrarJugador");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
+        if (!clubDelAgente) return;
+
+        const dorsalGenerado = obtenerDorsalDisponible(clubDelAgente.plantilla);
+        const nuevoPais = document.getElementById("nuevoPais").value.trim();
+
+        const nuevoJugador = {
+          id: Date.now(),
+          dorsal: dorsalGenerado,
+          nombre: document.getElementById("nuevoNombre").value.trim(),
+          posicion: document.getElementById("nuevoPosicion").value,
+          edad: Number(document.getElementById("nuevoEdad").value),
+          paisOrigen: nuevoPais,
+          partidos: 0,
+          goles: 0,
+          titular: false,
+          pie: document.getElementById("nuevoPie").value,
+          disponible: document.getElementById("nuevoTransferible").checked,
+          precio: Number(document.getElementById("nuevoPrecio").value),
+          clubActualId: clubDelAgente.id,
+          clubNombre: clubDelAgente.nombreCorto
+        };
+
+        // Si el país es nuevo, lo añadimos al filtro de países
+        if(!paisesUnicos.has(nuevoPais)){
+            paisesUnicos.add(nuevoPais);
+            const selectPais = document.getElementById("filtroPais");
+            const option = document.createElement("option");
+            option.value = nuevoPais;
+            option.textContent = nuevoPais;
+            selectPais.appendChild(option);
+        }
+
+        clubDelAgente.plantilla.push(nuevoJugador);
+        mercado.push(nuevoJugador);
+        localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
+
+        form.reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalRegistrarJugador')).hide();
+
+        renderizarMercado();
+        alert(`¡Jugador registrado correctamente! Se le ha asignado el dorsal #${dorsalGenerado}.`);
+      });
+
+      // Asignación de Listeners para la barra de filtros
+      document.getElementById("filtroTexto").addEventListener("input", renderizarMercado);
+      document.getElementById("filtroClub").addEventListener("change", renderizarMercado);
+      document.getElementById("filtroPais").addEventListener("change", renderizarMercado);
+      document.getElementById("filtroPosicion").addEventListener("change", renderizarMercado);
+      document.getElementById("filtroPie").addEventListener("change", renderizarMercado);
+      document.getElementById("filtroDisponible").addEventListener("change", renderizarMercado);
+      document.getElementById("filtroOrden").addEventListener("change", renderizarMercado);
+
+      // Arranque de la vista
+      prepararMercado();
+      renderizarMercado();
+      actualizarCarrito();
+    });
+  </script>
+</body>
+</html>
