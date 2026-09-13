@@ -1,0 +1,264 @@
+/* ==========================================================
+   REGISTRO NACIONAL DE FÚTBOL CHILENO (RNFC) - ESTILOS
+   ========================================================== */
+
+:root {
+  --rnfc-primary: #7a0000e9;
+  --rnfc-primary-dark: #580d0d;
+  --rnfc-primary-light: #8e1c1c;
+  --rnfc-blue: #0b1a30;
+  --rnfc-accent-blue: #0056b3;
+  --rnfc-badge-portero: #ffc107;
+  --rnfc-badge-defensa: #0d6efd;
+  --rnfc-badge-volante: #198754;
+  --rnfc-badge-delantero: #dc3545;
+  --rnfc-card-bg: #ffffff;
+  --rnfc-body-bg: #f5f7fa;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--rnfc-body-bg);
+  color: #2b2f38;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ==========================================================
+   NAVBAR INSTITUCIONAL (Basada en img_1.jpeg)
+   ========================================================== */
+.rnfc-navbar {
+  background-color: var(--rnfc-primary);
+  border-bottom: 2px solid var(--rnfc-primary-dark);
+}
+
+.rnfc-brand-logo {
+  height: 38px;
+  width: auto;
+}
+
+.rnfc-navbar .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0.5rem 0.85rem;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.rnfc-navbar .nav-link:hover,
+.rnfc-navbar .nav-link.active {
+  color: #ffffff;
+  opacity: 0.9;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.rnfc-search-input {
+  border-radius: 50px;
+  padding: 0.35rem 1rem;
+  font-size: 0.875rem;
+  border: none;
+}
+
+.rnfc-search-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.rnfc-avatar-icon {
+  width: 34px;
+  height: 34px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   BANNERS / HERO HEADERS
+   ========================================================== */
+.rnfc-hero-banner {
+  background: linear-gradient(135deg, var(--rnfc-primary) 0%, var(--rnfc-blue) 100%);
+  color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.rnfc-club-badge-large {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+}
+
+.rnfc-stat-chip {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.85rem;
+}
+
+/* ==========================================================
+   TARJETAS Y CONTENEDORES
+   ========================================================== */
+.card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.card-header-rnfc {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eef2f6;
+  font-weight: 600;
+  padding: 0.9rem 1.2rem;
+}
+
+/* ==========================================================
+   TARJETAS DE JUGADORES
+   ========================================================== */
+.player-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.player-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.player-avatar-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--rnfc-blue);
+  margin: 0 auto;
+}
+
+.badge-pos-portero {
+  background-color: #f59e0b;
+  color: #ffffff;
+}
+
+.badge-pos-defensa {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.badge-pos-volante {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.badge-pos-delantero {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   TABLA DE POSICIONES Y ZONAS
+   ========================================================== */
+.table-standings thead th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.table-standings tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.zone-libertadores {
+  border-left: 4px solid #16a34a !important;
+}
+
+.zone-sudamericana {
+  border-left: 4px solid #0284c7 !important;
+}
+
+.zone-descenso {
+  border-left: 4px solid #dc2626 !important;
+}
+
+.form-dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-right: 2px;
+}
+
+.form-dot.win {
+  background-color: #16a34a;
+}
+.form-dot.draw {
+  background-color: #64748b;
+}
+.form-dot.loss {
+  background-color: #dc2626;
+}
+
+/* ==========================================================
+   TARJETAS DE FIXTURE / PARTIDOS
+   ========================================================== */
+.fixture-card {
+  border-left: 4px solid var(--rnfc-primary);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+}
+
+.fixture-team-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.score-badge {
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 55px;
+  text-align: center;
+}
+
+/* ==========================================================
+   FOOTER INSTITUCIONAL
+   ========================================================== */
+.rnfc-footer {
+  background-color: #0b1420;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+}
+
+.rnfc-footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.rnfc-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}

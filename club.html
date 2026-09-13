@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de Club | RNFC - Registro Nacional de Fútbol Chileno</title>
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Estilos RNFC -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <!-- ==========================================================
+       NAVBAR INSTITUCIONAL RNFC
+       ========================================================== -->
+    <nav class="navbar navbar-expand-lg rnfc-navbar navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+          <img src="escudo_rnfc.png" alt="Logo" width="80" height="80" class="d-inline-block align-text-top">
+        </a>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="competicion.html">Competiciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="club.html">Clubes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#plantilla">Plantilla</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#estadio">Estadio</a>
+            </li>
+          </ul>
+
+          <div class="d-flex align-items-center gap-3">
+            <div class="input-group">
+              <input type="search" class="form-control rnfc-search-input" id="buscadorGlobal" placeholder="Buscar jugador, club..." aria-label="Buscar">
+            </div>
+            <div class="rnfc-avatar-icon" title="Perfil de Usuario">
+              <i class="bi bi-person-fill"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>  
+
+  <!-- ==========================================================
+       CONTENIDO PRINCIPAL
+       ========================================================== -->
+  <main class="container py-4">
+
+    <!-- Banner Hero del Club -->
+    <section class="rnfc-hero-banner p-4 p-md-5 mb-4 position-relative">
+      <div class="row align-items-center g-4">
+        
+        <!-- Escudo -->
+        <div class="col-auto text-center">
+          <img id="clubEscudo" src="" alt="Escudo del Club" class="rnfc-club-badge-large img-fluid">
+        </div>
+
+        <!-- Info Principal -->
+        <div class="col">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+            <span class="badge bg-light text-dark fw-bold" id="clubFundacionBadge">Fundado en —</span>
+            <span class="badge bg-warning text-dark fw-bold" id="clubPosicionBadge">#1 en Tabla</span>
+          </div>
+          <h1 class="h2 fw-bold text-white mb-1" id="clubNombre">—</h1>
+          <p class="text-white-50 mb-3 fs-6" id="clubApodo">—</p>
+
+          <!-- Chips estadísticos -->
+          <div class="d-flex flex-wrap gap-2">
+            <div class="rnfc-stat-chip">
+              <small class="d-block text-white-50">Estadio</small>
+              <strong class="text-white small" id="clubEstadioResumen">—</strong>
+            </div>
+            <div class="rnfc-stat-chip">
+              <small class="d-block text-white-50">Director Técnico</small>
+              <strong class="text-white small" id="clubDtresumen">—</strong>
+            </div>
+            <div class="rnfc-stat-chip">
+              <small class="d-block text-white-50">Títulos Nacionales</small>
+              <strong class="text-warning small" id="clubTitulosResumen">⭐ —</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Resumen y Ficha Técnica -->
+    <div class="row g-4 mb-4">
+      
+      <!-- Columna Izquierda: Plantilla de Jugadores -->
+      <div class="col-lg-8" id="plantilla">
+        <div class="card h-100">
+          <div class="card-header card-header-rnfc d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+              <h2 class="h5 mb-0 fw-bold"><i class="bi bi-people-fill text-danger me-2"></i>Plantilla Oficial de Jugadores</h2>
+              <small class="text-secondary" id="contadorJugadores">Cargando jugadores...</small>
+            </div>
+            
+            <!-- Buscador interno de jugadores -->
+            <div style="min-width: 200px;">
+              <input type="text" class="form-control form-control-sm" id="buscadorJugador" placeholder="Buscar por nombre o dorsal...">
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- Filtros de Posición -->
+            <div class="d-flex flex-wrap gap-1 mb-3" id="filtrosPosicion">
+              <button class="btn btn-sm btn-dark active" data-posicion="TODOS">Todos</button>
+              <button class="btn btn-sm btn-outline-secondary" data-posicion="Portero">Porteros</button>
+              <button class="btn btn-sm btn-outline-secondary" data-posicion="Defensa">Defensas</button>
+              <button class="btn btn-sm btn-outline-secondary" data-posicion="Mediocampista">Mediocampistas</button>
+              <button class="btn btn-sm btn-outline-secondary" data-posicion="Delantero">Delanteros</button>
+            </div>
+
+            <!-- Grilla de Tarjetas de Jugadores -->
+            <div class="row g-3" id="contenedorJugadores">
+              <!-- Renderizado dinámico desde club.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Información Institucional, Estadio y Resultados -->
+      <div class="col-lg-4">
+        
+        <!-- Ficha Institucional -->
+        <div class="card mb-4" id="informacion">
+          <div class="card-header card-header-rnfc">
+            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-info-circle-fill text-primary me-2"></i>Información Institucional</h3>
+          </div>
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush small">
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Nombre Oficial:</span>
+                <span class="fw-semibold text-end" id="infoNombreOficial">—</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Ciudad / Región:</span>
+                <span class="fw-semibold text-end" id="infoCiudad">—</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Presidente:</span>
+                <span class="fw-semibold text-end" id="infoPresidente">—</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Colores Oficiales:</span>
+                <span class="fw-semibold text-end" id="infoColores">—</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Copas Chile:</span>
+                <span class="fw-semibold text-end" id="infoCopasChile">—</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-secondary">Sitio Oficial:</span>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="fw-semibold text-end" id="infoSitioWeb">Visitar web</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer bg-light small text-secondary" id="clubHistoria">
+            —
+          </div>
+        </div>
+
+        <!-- Estadio -->
+        <div class="card mb-4" id="estadio">
+          <div class="card-header card-header-rnfc">
+            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Estadio Principal</h3>
+          </div>
+          <div class="card-body">
+            <h4 class="h6 fw-bold mb-1" id="estadioNombre">—</h4>
+            <p class="small text-secondary mb-2" id="estadioUbicacion">—</p>
+            <div class="d-flex align-items-center justify-content-between bg-light p-2 rounded">
+              <span class="small text-secondary">Aforo / Capacidad:</span>
+              <span class="badge bg-secondary fs-6" id="estadioCapacidad">— espectadores</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Últimos Resultados -->
+        <div class="card">
+          <div class="card-header card-header-rnfc">
+            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-calendar-check-fill text-success me-2"></i>Últimos Partidos</h3>
+          </div>
+          <div class="card-body p-0">
+            <div class="list-group list-group-flush small" id="listaUltimosPartidos">
+              <!-- Renderizado dinámico -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==========================================================
+       FOOTER INSTITUCIONAL RNFC
+       ========================================================== -->
+  <footer class="rnfc-footer mt-auto py-4 border-top">
+    <div class="container text-center text-md-start">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center gap-2 justify-content-center justify-content-md-start">
+            <i class="bi bi-shield-shaded fs-4 text-danger"></i>
+            <span class="fw-bold text-white">Registro Nacional de Fútbol Chileno (RNFC)</span>
+          </div>
+          <p class="text-secondary small mb-0 mt-1">Plataforma oficial para la consulta de clubes, competiciones y futbolistas del fútbol profesional chileno.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <div class="d-flex gap-3 justify-content-center justify-content-md-end mb-2">
+            <a href="competicion.html">Competiciones</a>
+            <a href="club.html">Clubes</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+          </div>
+          <small class="text-secondary">&copy; 2026 RNFC. Proyecto Académico FullStack 2.</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Bootstrap JS, Seeders y Lógica de Club -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/seeders.js"></script>
+  <script src="js/club.js"></script>
+</body>
+</html>
