@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión | RNFC</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    :root {
+      --rnfc-red: #c00000f6;
+      --rnfc-red-hover: #9a0000;
+      --rnfc-blue: #140083e3;
+    }
+    
+    body {
+      background-color: var(--rnfc-blue);
+      background-image: linear-gradient(135deg, #140083e3 0%, #0a0042 100%);
+      min-height: 100vh;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .login-container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .card-login {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .login-header {
+      background-color: var(--rnfc-red);
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .btn-rnfc-red {
+      background-color: var(--rnfc-red) !important;
+      color: white;
+      border-color: var(--rnfc-red) !important;
+      padding: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-rnfc-red:hover { 
+      background-color: var(--rnfc-red-hover) !important; 
+      color: white; 
+    }
+
+    .info-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      color: white;
+    }
+
+    .form-control:focus {
+      border-color: var(--rnfc-red);
+      box-shadow: 0 0 0 0.25rem rgba(192, 0, 0, 0.25);
+    }
+  </style>
+</head>
+<body class="d-flex align-items-center justify-content-center p-3 p-md-0">
+
+  <!-- Contenedor Principal -->
+  <div class="login-container">
+    <div class="row g-4 align-items-center">
+      
+      <!-- Columna del Formulario de Inicio de Sesión -->
+      <div class="col-md-6">
+        <div class="card card-login bg-white">
+          <div class="login-header">
+            <img src="assets/escudo_rnfc.png" alt="Logo RNFC" width="100" height="100" class="mb-3" onerror="this.src='https://via.placeholder.com/100?text=RNFC'">
+            <h1 class="h4 fw-bold mb-0">Acceso Plataforma</h1>
+            <p class="small text-white-50 mb-0 mt-1">Registro Nacional de Fútbol Chileno</p>
+          </div>
+          <div class="card-body p-4 p-md-5">
+            <form id="loginForm">
+              <div class="mb-4">
+                <label for="emailInput" class="form-label fw-bold text-secondary">Correo Institucional</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-secondary"></i></span>
+                  <input type="email" class="form-control border-start-0 ps-0" id="emailInput" placeholder="tu@correo.cl" required>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="passwordInput" class="form-label fw-bold text-secondary">Contraseña</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-secondary"></i></span>
+                  <input type="password" class="form-control border-start-0 ps-0" id="passwordInput" placeholder="••••••••" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-rnfc-red w-100 rounded-pill mt-2">Iniciar Sesión</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna de Credenciales de Prueba -->
+      <div class="col-md-6">
+        <div class="info-box p-4 p-md-5 h-100">
+          <h2 class="h4 fw-bold mb-3"><i class="bi bi-person-badge me-2"></i>Cuentas de Prueba</h2>
+          <p class="mb-4 text-white-50">Utiliza las siguientes credenciales para acceder a los perfiles de prueba de la plataforma.</p>
+          
+          <h3 class="h6 fw-bold text-warning mb-3 border-bottom border-secondary pb-2">Agentes (Clave: admin123)</h3>
+          <ul class="list-unstyled mb-4">
+            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>agente@colocolo.cl</strong> (Colo-Colo)</li>
+            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>agente@udechile.cl</strong> (U. de Chile)</li>
+            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>agente@cruzados.cl</strong> (U. Católica)</li>
+            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>agente@cobreloa.cl</strong> (Cobreloa)</li>
+          </ul>
+
+          <h3 class="h6 fw-bold text-info mb-3 border-bottom border-secondary pb-2">Visita (Clave: user1234)</h3>
+          <ul class="list-unstyled mb-0">
+            <li><i class="bi bi-eye-fill text-info me-2"></i><strong>usuario@gmail.com</strong> (Sin club asociado)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /**
+     * @constant {Object} usuariosPermitidos
+     * @description Base de datos simulada de usuarios autorizados, sus credenciales y roles.
+     */
+    const usuariosPermitidos = {
+      "agente@colocolo.cl": { 
+        password: "admin123", 
+        rol: "agente", 
+        clubId: 1, 
+        nombre: "Agente Colo-Colo" 
+      },
+      "agente@udechile.cl": { 
+        password: "admin123", 
+        rol: "agente", 
+        clubId: 2, 
+        nombre: "Agente U. de Chile" 
+      },
+      "agente@cruzados.cl": { 
+        password: "admin123", 
+        rol: "agente", 
+        clubId: 3, 
+        nombre: "Agente U. Católica" 
+      },
+      "agente@cobreloa.cl": { 
+        password: "admin123", 
+        rol: "agente", 
+        clubId: 4, 
+        nombre: "Agente Cobreloa" 
+      },
+      "usuario@gmail.com": { 
+        password: "user1234", 
+        rol: "visita", 
+        clubId: null, 
+        nombre: "Usuario Visitante" 
+      }
+    };
+
+    /**
+     * Listener del evento submit del formulario para la autenticación.
+     */
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const correo = document.getElementById("emailInput").value.trim().toLowerCase();
+      const contrasena = document.getElementById("passwordInput").value.trim();
+      
+      const usuarioValido = usuariosPermitidos[correo];
+
+      if (usuarioValido && usuarioValido.password === contrasena) {
+        
+        const sesion = {
+          nombre: usuarioValido.nombre,
+          correo: correo,
+          rol: usuarioValido.rol,
+          clubId: usuarioValido.clubId
+        };
+
+        sessionStorage.setItem("rnfc_sesion", JSON.stringify(sesion));
+        window.location.href = "jugadores.html";
+        
+      } else {
+        alert("Credenciales incorrectas. Revisa el correo y la contraseña.");
+      }
+    });
+  </script>
+</body>
+</html>
