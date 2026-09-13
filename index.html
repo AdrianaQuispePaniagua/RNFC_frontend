@@ -14,7 +14,7 @@
         <nav class="navbar navbar-expand-lg d-flex justify-content-between">
             <div >
                 <a class="navbar-brand" href="#">
-                    <img src="escudo_rnfc.png" alt="Logo" width="80" height="80" class="d-inline-block align-text-top"> 
+                    <img src="assets/escudo_rnfc.png" alt="Logo" width="80" height="80" class="d-inline-block align-text-top"> 
                 </a>
             </div>
             <div>
@@ -52,7 +52,99 @@
         </nav>
     </header>
     <main>
+        <section class="hero-seccion d-flex justify-content-center align-items-center">
+            <div class="hero-texto-container text-center">
+                <h1 class="display-4">Bienvenido al Registro Nacional del Fútbol Chileno</h1>
+                <p class="lead">Tu fuente confiable para estadísticas, jugadores y competiciones del fútbol chileno.</p>
+                <a href="#registro" class="btn btn-primary btn-lg">Regístrate Ahora</a>
+            </div>
+            <div>
+                <img src="assets/escudo_rnfc.png" alt="Imagen de fútbol chileno" class="img-fluid">
+            </div>
+        </section>
+        <section class="features-seccion d-flex justify-content-around align-items-center">
+            <div class="feature-card text-center p-4 my-3 ">
+                <i class="fa-solid fa-users fa-3x mb-3"></i>
+                <h3>Jugadores</h3>
+                <p>Accede a información detallada sobre jugadores chilenos, sus estadísticas y trayectoria.</p>
+
+            </div>
+            <div class="feature-card text-center p-4">
+                <i class="fa-solid fa-trophy fa-3x mb-3"></i>
+                <h3>Competiciones</h3>
+                <p>Consulta resultados, tablas de posiciones y detalles de las competiciones nacionales.</p>
+            </div>
+            <div class="feature-card texto-center p-4">
+                <i class="fa-solid fa-chart-line fa-3x mb-3"></i>
+                <h3>Estadísticas</h3>
+                <p>Explora estadísticas avanzadas y análisis de rendimiento de jugadores y equipos.</p>
+            </div>
+        </section>
+        <section class="carrusel-competiciones ">
+            <h2 class="text-start my-4 p-3 mx-4">Competiciones</h2>
+            <div class="d-flex justify-content-between align-items-center p-5"> 
+                <button class="btn-prev btn btn-dark rounded-circle" type="button" id="btn-prev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div id="competicion-container" class="d-flex justify-content-center mx-3 gap-3 flex-wrap">
+                </div>
+                <button id="btn-siguiente" class="btn-siguiente btn btn-dark rounded-circle" type="button">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                
+            </div>
+        </section>
     </main>
     <footer></footer>
 </body>
 </html>
+
+<script>
+
+    const competiciones = [
+        { nombre: "Liga de Primera", imagen: "assets/liga_primera.png", width: 200, height: 200 },
+        { nombre: "Liga de Ascenso", imagen: "assets/liga_ascenso.png", width: 200, height: 200 },
+        
+        { nombre: "Liga Femenina", imagen: "assets/liga_femenina.png", width: 200, height: 200 },
+        { nombre: "Liga de Segunda", imagen: "assets/liga_segunda.png", width: 190, height: 200 },
+        { nombre: "Copa Chile", imagen: "assets/copa_chile.png", width: 200, height: 200 },
+        { nombre: "Supercopa de Chile", imagen: "assets/supercopa_chile.png", width: 200, height: 200 },
+        { nombre: "Copa de la Liga", imagen: "assets/copaliga_chile.png", width: 200, height: 200 }
+    ];
+
+    const competicionesContainer = document.getElementById("competicion-container");
+
+    competicionesContainer.innerHTML = competiciones.slice(0, 5).map((competicion) => `
+        <a href="#" class="competition-card text-center m-2">
+            <img src="${competicion.imagen}" alt="${competicion.nombre}" class="img-fluid mb-2" width="${competicion.width}" height="${competicion.height}">
+        </a>
+    `).join('');
+
+    const btnPrev = document.getElementById("btn-prev");
+    const btnSiguiente = document.getElementById("btn-siguiente");
+
+    let currentIndex = 0;
+
+    btnPrev.addEventListener("click", () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            actualizarCompeticiones();
+        }
+    });
+
+    btnSiguiente.addEventListener("click", () => {
+        if (currentIndex < competiciones.length - 5) {
+            currentIndex++;
+            actualizarCompeticiones();
+        }
+    });
+
+    function actualizarCompeticiones() {
+        competicionesContainer.innerHTML = competiciones.slice(currentIndex, currentIndex + 5).map((competicion) => `
+            <a href="#" class="competition-card text-center m-2">
+                <img src="${competicion.imagen}" alt="${competicion.nombre}" class="img-fluid mb-2" width="${competicion.width}" height="${competicion.height}">
+            </a>
+        `).join('');
+    }
+
+</script>
