@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 2. Determinar club actual según parámetro URL (?id=...) o por defecto el primero
+  // 2. Determinar club actual según parámetro URL (?id=...) o por defecto la U
   const urlParams = new URLSearchParams(window.location.search);
   const clubIdParam = urlParams.get("id");
-  let clubActual = clubIdParam ? obtenerClubPorId(Number(clubIdParam)) : clubes[0];
+  let clubActual = clubIdParam ? obtenerClubPorId(Number(clubIdParam)) : clubes[1];
 
   let filtroPosicionActual = "TODOS";
   let textoBusquedaActual = "";
