@@ -690,7 +690,23 @@
       document.getElementById("filtroDisponible").addEventListener("change", renderizarMercado);
       document.getElementById("filtroOrden").addEventListener("change", renderizarMercado);
 
+      /**
+       * @function aplicarFiltroClubDesdeUrl
+       * @description Si la URL trae ?club=ID (por ejemplo desde el nombre en el navbar de index.html),
+       * preselecciona ese club en el filtro.
+       */
+      function aplicarFiltroClubDesdeUrl() {
+        const parametros = new URLSearchParams(window.location.search);
+        const clubDesdeUrl = parametros.get("club");
+        const selectClub = document.getElementById("filtroClub");
+
+        if (clubDesdeUrl && selectClub.querySelector(`option[value="${clubDesdeUrl}"]`)) {
+          selectClub.value = clubDesdeUrl;
+        }
+      }
+
       prepararMercado();
+      aplicarFiltroClubDesdeUrl();
       renderizarMercado();
       actualizarCarrito();
     });

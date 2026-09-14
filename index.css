@@ -74,6 +74,12 @@ html {
     font-weight: 600;
     font-family: 'Roboto', sans-serif;
     white-space: nowrap;
+    text-decoration: none;
+}
+
+.nombre-usuario:hover {
+    color: #d9d9d9;
+    text-decoration: underline;
 }
 
 /* ==========================================================

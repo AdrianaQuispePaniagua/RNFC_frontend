@@ -50,7 +50,7 @@
             </div>
             <!-- Usuario: nombre (si hay sesión) e ícono para ir al login -->
             <div class="usuario-container d-flex align-items-center gap-2">
-                <span id="nombre-usuario" class="nombre-usuario" hidden></span>
+                <a href="jugadores.html" id="nombre-usuario" class="nombre-usuario" hidden></a>
                 <a href="login.html" class="btn btn-outline-light rounded-circle" role="button">
                     <i class="fa-solid fa-user"></i>
                 </a>
@@ -291,7 +291,8 @@
 
     /* ==========================================================
        NOMBRE DEL USUARIO CONECTADO
-       Lee la sesión guardada por login.html y muestra el nombre en el navbar
+       Lee la sesión guardada por login.html y muestra el nombre en el navbar.
+       Al hacer clic lleva a jugadores.html filtrado por el club del usuario.
        ========================================================== */
 
     function mostrarNombreUsuario() {
@@ -307,6 +308,11 @@
         if (sesion && sesion.nombre) {
             nombreUsuario.textContent = sesion.nombre;
             nombreUsuario.hidden = false;
+
+            // Si el usuario tiene club (agentes), se envía su id en la URL
+            if (sesion.clubId != null) {
+                nombreUsuario.href = `jugadores.html?club=${sesion.clubId}`;
+            }
         }
     }
 
