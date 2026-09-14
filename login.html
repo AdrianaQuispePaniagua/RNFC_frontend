@@ -167,7 +167,7 @@
     };
 
     /**
-     * Listener del evento submit del formulario para la autenticación.
+     * Listener del evento submit del formulario para la autenticación y redirección.
      */
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -186,8 +186,17 @@
           clubId: usuarioValido.clubId
         };
 
+        // Guardamos la sesión en el navegador
         sessionStorage.setItem("rnfc_sesion", JSON.stringify(sesion));
-        window.location.href = "jugadores.html";
+
+        let urlDestino = "index.html"; 
+        const urlPrevio = document.referrer;
+        
+        if (urlPrevio && urlPrevio.includes(window.location.host) && !urlPrevio.includes("login.html")) {
+          urlDestino = urlPrevio;
+        }
+        
+        window.location.href = urlDestino;
         
       } else {
         alert("Credenciales incorrectas. Revisa el correo y la contraseña.");
