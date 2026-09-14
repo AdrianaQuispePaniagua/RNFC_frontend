@@ -45,6 +45,12 @@
     .btn-outline-rnfc { color: var(--rnfc-red) !important; border-color: var(--rnfc-red) !important; }
     .btn-outline-rnfc:hover { background-color: var(--rnfc-red) !important; color: white !important; }
 
+    .btn-logout:hover {
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      color: white !important;
+    }
+
     .features-seccion {
       background-color: #140083e3;
       color: #ffffff;
@@ -66,9 +72,8 @@
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
           <img src="assets/escudo_rnfc.png" alt="Logo RNFC" width="80" height="80" class="d-inline-block align-text-top" onerror="this.src='escudo_rnfc.png'">
-          <span class="fs-4 ms-2">Jugadores</span>
         </a>
-
+        
         <!-- Contenedor alineado a la izquierda para los botones de navegación -->
         <div class="d-flex align-items-center gap-2 me-auto ms-4">
           <!-- Botón de Inicio reubicado y redimensionado -->
@@ -85,6 +90,11 @@
           <a href="login.html" class="btn btn-light btn-sm fw-bold text-rnfc-red" id="btnAcceder">
             <i class="bi bi-box-arrow-in-right me-1"></i>Acceder
           </a>
+
+          <!-- Botón de Cerrar Sesión (visible con sesión) -->
+          <button class="btn btn-outline-light btn-logout d-none" id="btnCerrarSesion" title="Cerrar Sesión">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
 
           <!-- Botón de Carrito -->
           <button class="btn btn-outline-light position-relative d-none" id="btnAbrirCarrito" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
@@ -153,8 +163,8 @@
         <!-- Controles de Ordenamiento -->
         <div class="row g-3 align-items-end border-top border-light pt-3 mt-1">
             <div class="col-md-3">
-                <label class="form-label small fw-bold"><i class="bi bi-sort-down me-1"></i>Ordenar resultados por:</label>
-                <select class="form-select rounded-pill px-3" id="filtroOrden">
+                <label class="form-label small fw-bold text-white"><i class="bi bi-sort-down me-1"></i>Ordenar resultados por:</label>
+                <select class="form-select rounded-pill px-3 bg-white text-dark" id="filtroOrden">
                   <option value="defecto">Por Defecto</option>
                   <option value="edadAsc">Edad (Menor a Mayor)</option>
                   <option value="edadDesc">Edad (Mayor a Menor)</option>
@@ -307,11 +317,13 @@
       const btnAbrirCarrito = document.getElementById("btnAbrirCarrito");
       const btnRegistrarJugador = document.getElementById("btnRegistrarJugador");
       const btnAcceder = document.getElementById("btnAcceder");
+      const btnCerrarSesion = document.getElementById("btnCerrarSesion");
 
       if (rolActual === "agente" && usuarioActual) {
         btnAbrirCarrito.classList.remove("d-none");
         btnRegistrarJugador.classList.remove("d-none");
-        btnAcceder.classList.add("d-none"); // Oculta botón de acceder si ya inició sesión
+        btnAcceder.classList.add("d-none"); 
+        btnCerrarSesion.classList.remove("d-none");
 
         let nombreClub = "";
         if (usuarioActual.clubId != null) {
@@ -324,11 +336,12 @@
 
       } else if (rolActual === "visita" && usuarioActual) {
         navInfoUsuario.textContent = usuarioActual.nombre;
-        btnAcceder.classList.add("d-none"); // Oculta botón de acceder si inició sesión como visita
+        btnAcceder.classList.add("d-none"); 
+        btnCerrarSesion.classList.remove("d-none");
       } else {
-        // No hay sesión
         navInfoUsuario.textContent = ""; 
         btnAcceder.classList.remove("d-none");
+        btnCerrarSesion.classList.add("d-none");
       }
     }
 
@@ -387,7 +400,6 @@
               seGeneraronDatosNuevos = true;
             }
             
-            // Normalización de la variable nacionalidad a país de origen
             if(jugador.nacionalidad && !jugador.paisOrigen){
                 jugador.paisOrigen = jugador.nacionalidad;
             }
@@ -401,7 +413,6 @@
           localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
         }
 
-        // Llenar selector de Clubes
         const selectClub = document.getElementById("filtroClub");
         selectClub.innerHTML = '<option value="TODOS">Todos</option>';
         clubesData.forEach(c => {
@@ -411,7 +422,6 @@
           selectClub.appendChild(option);
         });
 
-        // Llenar selector de Países
         const selectPais = document.getElementById("filtroPais");
         selectPais.innerHTML = '<option value="TODOS">Todos</option>';
         Array.from(paisesUnicos).sort().forEach(pais => {
@@ -439,7 +449,6 @@
 
         contenedor.innerHTML = "";
 
-        // 1. Filtrado de datos
         let filtrados = mercado.filter(j => {
           const pasaTexto = j.nombre.toLowerCase().includes(texto) || (j.paisOrigen && j.paisOrigen.toLowerCase().includes(texto));
           const pasaPosicion = posicion === "TODOS" || j.posicion === posicion;
@@ -451,7 +460,6 @@
           return pasaTexto && pasaPosicion && pasaPie && pasaClub && pasaDisp && pasaPais;
         });
 
-        // 2. Ordenamiento de datos
         filtrados.sort((a, b) => {
             switch(orden){
                 case 'edadAsc':
@@ -476,7 +484,6 @@
           return;
         }
 
-        // 3. Renderizado en el DOM
         filtrados.forEach(j => {
           const mostrarBtnCompra = rolActual === "agente" && !!usuarioActual &&
             j.disponible && j.clubActualId !== usuarioActual.clubId;
@@ -523,7 +530,6 @@
       /**
        * @function agregarAlCarrito
        * @description Ingresa un jugador a la lista de fichajes pendientes.
-       * @param {number} id - ID del jugador.
        */
       function agregarAlCarrito(id) {
         if (rolActual !== "agente" || !usuarioActual) return;
@@ -537,8 +543,7 @@
 
       /**
        * @function eliminarItem
-       * @description Remueve un jugador del carrito (expuesta en window para el onclick en línea).
-       * @param {number} id - ID del jugador.
+       * @description Remueve un jugador del carrito.
        */
       window.eliminarItem = function (id) {
         carrito = carrito.filter(item => item.id !== id);
@@ -578,7 +583,6 @@
 
       /**
        * Listener del botón de confirmación de compra.
-       * Transfiere el jugador, asigna un nuevo dorsal y persiste los datos.
        */
       document.getElementById("btnConfirmarCompra").addEventListener("click", () => {
         if (rolActual !== "agente" || !usuarioActual) return;
@@ -592,7 +596,6 @@
         if (!clubComprador) return;
 
         carrito.forEach(jugadorComprado => {
-          // Remover jugador de la plantilla de origen
           clubesData.forEach(club => {
             club.plantilla = club.plantilla.filter(j => j.id !== jugadorComprado.id);
           });
@@ -651,7 +654,6 @@
           clubNombre: clubDelAgente.nombreCorto
         };
 
-        // Si el país es nuevo, lo añadimos al filtro de países
         if(!paisesUnicos.has(nuevoPais)){
             paisesUnicos.add(nuevoPais);
             const selectPais = document.getElementById("filtroPais");
@@ -672,7 +674,14 @@
         alert(`¡Jugador registrado correctamente! Se le ha asignado el dorsal #${dorsalGenerado}.`);
       });
 
-      // Asignación de Listeners para la barra de filtros
+      /**
+       * Listener para cerrar la sesión actual.
+       */
+      document.getElementById("btnCerrarSesion").addEventListener("click", () => {
+        sessionStorage.removeItem(KEY_SESION);
+        window.location.reload();
+      });
+
       document.getElementById("filtroTexto").addEventListener("input", renderizarMercado);
       document.getElementById("filtroClub").addEventListener("change", renderizarMercado);
       document.getElementById("filtroPais").addEventListener("change", renderizarMercado);
@@ -681,7 +690,6 @@
       document.getElementById("filtroDisponible").addEventListener("change", renderizarMercado);
       document.getElementById("filtroOrden").addEventListener("change", renderizarMercado);
 
-      // Arranque de la vista
       prepararMercado();
       renderizarMercado();
       actualizarCarrito();
