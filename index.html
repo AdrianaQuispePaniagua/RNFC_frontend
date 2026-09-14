@@ -10,41 +10,47 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!-- ============ NAVBAR: logo, enlaces, buscador y usuario ============ -->
     <header>
         <nav class="navbar navbar-expand-lg d-flex justify-content-between">
+            <!-- Logo -->
             <div >
                 <a class="navbar-brand" href="#">
                     <img src="assets/escudo_rnfc.png" alt="Logo" width="80" height="80" class="d-inline-block align-text-top"> 
                 </a>
             </div>
+            <!-- Enlaces a cada sección -->
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
+                        <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="jugadores.html">Jugadores</a>
+                        <a class="nav-link" href="#jugadores">Jugadores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Competiciones</a>
+                        <a class="nav-link" href="#competiciones">Competiciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Estadísticas</a>
+                        <a class="nav-link" href="#estadisticas">Estadísticas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre Nosotros</a>
+                        <a class="nav-link" href="#sobre-nosotros">Sobre Nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
+                        <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                 </ul>
             </div>
+            <!-- Buscador -->
             <div>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-1" type="search" placeholder="Buscar jugador, equipo, competición..." aria-label="Search">
                 </form>
             </div>
-            <div>
+            <!-- Usuario: nombre (si hay sesión) e ícono para ir al login -->
+            <div class="usuario-container d-flex align-items-center gap-2">
+                <span id="nombre-usuario" class="nombre-usuario" hidden></span>
                 <a href="login.html" class="btn btn-outline-light rounded-circle" role="button">
                     <i class="fa-solid fa-user"></i>
                 </a>
@@ -52,7 +58,8 @@
         </nav>
     </header>
     <main>
-        <section class="hero-seccion d-flex justify-content-center align-items-center">
+        <!-- ============ SECCIÓN INICIO (HERO): portada y bienvenida ============ -->
+        <section id="inicio" class="hero-seccion d-flex justify-content-center align-items-center">
             <div class="hero-texto-container text-center">
                 <h1 class="display-4">Bienvenido al Registro Nacional del Fútbol Chileno</h1>
                 <p class="lead">Tu fuente confiable para estadísticas, jugadores y competiciones del fútbol chileno.</p>
@@ -62,7 +69,8 @@
                 <img src="assets/escudo_rnfc.png" alt="Imagen de fútbol chileno" class="img-fluid">
             </div>
         </section>
-        <section class="features-seccion d-flex justify-content-around align-items-center">
+        <!-- ============ SECCIÓN SOBRE NOSOTROS: lo que ofrece la plataforma ============ -->
+        <section id="sobre-nosotros" class="features-seccion d-flex justify-content-around align-items-center">
             <div class="feature-card text-center p-4 my-3 ">
                 <i class="fa-solid fa-users fa-3x mb-3"></i>
                 <h3>Jugadores</h3>
@@ -74,19 +82,22 @@
                 <h3>Competiciones</h3>
                 <p>Consulta resultados, tablas de posiciones y detalles de las competiciones nacionales.</p>
             </div>
-            <div class="feature-card texto-center p-4">
+            <div class="feature-card text-center p-4">
                 <i class="fa-solid fa-chart-line fa-3x mb-3"></i>
                 <h3>Estadísticas</h3>
                 <p>Explora estadísticas avanzadas y análisis de rendimiento de jugadores y equipos.</p>
             </div>
         </section>
-        <section class="carrusel-competiciones ">
+        <!-- ============ SECCIÓN COMPETICIONES: carrusel infinito (se llena desde JS) ============ -->
+        <section id="competiciones" class="carrusel-competiciones ">
             <h2 class="text-start my-4 p-3 mx-4">Competiciones</h2>
             <div class="d-flex justify-content-between align-items-center p-5"> 
                 <button class="btn-prev btn btn-dark rounded-circle" type="button" id="btn-prev">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <div id="competicion-container" class="d-flex justify-content-center mx-3 gap-3 flex-wrap">
+                <div class="carrusel-ventana mx-3">
+                    <div id="competicion-container" class="carrusel-pista">
+                    </div>
                 </div>
                 <button id="btn-siguiente" class="btn-siguiente btn btn-dark rounded-circle" type="button">
                     <i class="fa-solid fa-chevron-right"></i>
@@ -94,38 +105,42 @@
                 
             </div>
         </section>
-        <section class="jugadores-destaccados-seccion">
-            <h2 class="text-start my-4 p-3 mx-4">Jugadores Destacados</h2>
-            <div class="d-flex justify-content-between align-items-center p-5">
-                <button class="btn-prev btn btn-dark rounded-circle" type="button" id="btn-prev-jugadores">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <div id="jugadores-container" class="d-flex justify-content-center mx-3 gap-3 flex-wrap">
-                </div>
-                <button id="btn-siguiente-jugadores" class="btn-siguiente btn btn-dark rounded-circle" type="button">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+        <!-- ============ SECCIÓN JUGADORES DESTACADOS: cards (se llenan desde JS) ============ -->
+        <section id="jugadores" class="jugadores-destacados-seccion">
+            <h2 id="estadisticas" class="text-start my-4 p-3 mx-4">Jugadores Destacados</h2>
+            <div id="jugadores-container" class="d-flex justify-content-center gap-4 flex-wrap px-5 pb-5">
             </div>
         </section>
-        <section class="contacto-seccion text-center p-5">
-            <h2 class="my-4">Contáctanos</h2>
-            <p>Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.</p>
-           <form class="contacto-form d-flex flex-column align-items-center" id="contacto-form">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+        <!-- ============ SECCIÓN CONTACTO: formulario ============ -->
+        <section id="contacto" class="contacto-seccion p-5">
+            <h2 class="my-4 text-center">Contáctanos</h2>
+            <p class="text-center">Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.</p>
+            <form class="contacto-form" id="contacto-form">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="tu@correo.cl" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="asunto" class="form-label">Asunto</label>
+                        <input type="text" class="form-control" id="asunto" placeholder="Asunto del mensaje" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-light btn-enviar px-5">Enviar</button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="asunto" placeholder="Asunto">
-                <div class="mb-3">
-                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Mensaje"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </section>
     </main>
+    <!-- ============ FOOTER ============ -->
     <footer class="footer-seccion text-center p-4">
         <p>&copy; 2026 Registro Nacional del Fútbol Chileno. Todos los derechos reservados.</p>
     </footer>
@@ -134,10 +149,13 @@
 
 <script>
 
+    /* ==========================================================
+       CARRUSEL DE COMPETICIONES
+       ========================================================== */
+
     const competiciones = [
         { nombre: "Liga de Primera", imagen: "assets/liga_primera.png", width: 200, height: 200 },
         { nombre: "Liga de Ascenso", imagen: "assets/liga_ascenso.png", width: 200, height: 200 },
-        
         { nombre: "Liga Femenina", imagen: "assets/liga_femenina.png", width: 200, height: 200 },
         { nombre: "Liga de Segunda", imagen: "assets/liga_segunda.png", width: 190, height: 200 },
         { nombre: "Copa Chile", imagen: "assets/copa_chile.png", width: 200, height: 200 },
@@ -147,37 +165,156 @@
 
     const competicionesContainer = document.getElementById("competicion-container");
 
-    competicionesContainer.innerHTML = competiciones.slice(0, 5).map((competicion) => `
-        <a href="#" class="competition-card text-center m-2">
-            <img src="${competicion.imagen}" alt="${competicion.nombre}" class="img-fluid mb-2" width="${competicion.width}" height="${competicion.height}">
+    // Se dibujan todas las competiciones en una "pista" que se desliza dentro de una ventana
+    competicionesContainer.innerHTML = competiciones.map((competicion) => `
+        <a href="#" class="competition-card">
+            <img src="${competicion.imagen}" alt="${competicion.nombre}" class="img-fluid" width="${competicion.width}" height="${competicion.height}">
         </a>
     `).join('');
 
     const btnPrev = document.getElementById("btn-prev");
     const btnSiguiente = document.getElementById("btn-siguiente");
 
-    let currentIndex = 0;
+    const duracionMovimiento = 500;
+    let enMovimiento = false;
 
-    btnPrev.addEventListener("click", () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            actualizarCompeticiones();
+    // Distancia que avanza la pista: ancho de una tarjeta + el espacio entre tarjetas
+    function calculoEspacio() {
+        const primeraTarjeta = competicionesContainer.firstElementChild;
+        const espacio = parseFloat(getComputedStyle(competicionesContainer).gap) || 0;
+        return primeraTarjeta.offsetWidth + espacio;
+    }
+
+    function transicionCarrusel(desplazamiento, conAnimacion) {
+        competicionesContainer.style.transition = conAnimacion
+            ? `transform ${duracionMovimiento}ms ease-in-out`
+            : "none";
+        competicionesContainer.style.transform = `translateX(${desplazamiento}px)`;
+    }
+
+    function avanzarCompeticion() {
+        if (enMovimiento) return;
+        enMovimiento = true;
+
+        // 1. Deslizamos la pista hacia la izquierda
+        transicionCarrusel(-obtenerPaso(), true);
+
+        // 2. Al terminar, pasamos la primera tarjeta al final y volvemos a 0 sin animación
+        setTimeout(() => {
+            competicionesContainer.appendChild(competicionesContainer.firstElementChild);
+            transicionCarrusel(0, false);
+            enMovimiento = false;
+        }, duracionMovimiento);
+    }
+
+    function retrocederCompeticion() {
+        if (enMovimiento) return;
+        enMovimiento = true;
+
+        // 1. Pasamos la última tarjeta al inicio y corremos la pista sin animación
+        competicionesContainer.prepend(competicionesContainer.lastElementChild);
+        transicionCarrusel(-obtenerPaso(), false);
+
+        // 2. Forzamos al navegador a aplicar la posición antes de animar
+        competicionesContainer.offsetWidth;
+
+        // 3. Deslizamos la pista de vuelta a 0
+        transicionCarrusel(0, true);
+
+        setTimeout(() => {
+            enMovimiento = false;
+        }, duracionMovimiento);
+    }
+
+    btnSiguiente.addEventListener("click", avanzarCompeticion);
+    btnPrev.addEventListener("click", retrocederCompeticion);
+
+    /* ==========================================================
+       JUGADORES DESTACADOS
+       ========================================================== */
+
+    const jugadoresDestacados = [
+        {
+            categoria: "Máximo Goleador",
+            icono: "fa-futbol",
+            nombre: "Fernando Zampedri",
+            valor: "25",
+            unidad: "Goles",
+            club: "Universidad Católica",
+            imagenJugador: "assets/FernandoZampedri.jpg",
+            imagenClub: "assets/UCatolica.webp"
+        },
+        {
+            categoria: "Máximo Asistidor",
+            icono: "fa-handshake-angle",
+            nombre: "Jean Meneses",
+            valor: "9",
+            unidad: "Asistencias",
+            club: "Deportes Limache",
+            imagenJugador: "assets/JeanMeneses.webp",
+            imagenClub: "assets/deporteslimache.webp"
+        },
+        {
+            categoria: "Jugador Más Valorado",
+            icono: "fa-star",
+            nombre: "Arturo Vidal",
+            valor: "9.12",
+            unidad: "Valoración",
+            club: "Colo-Colo",
+            imagenJugador: "assets/ArturoVidal.jpg",
+            imagenClub: "assets/ColoColo.webp"
         }
-    });
+    ];
 
-    btnSiguiente.addEventListener("click", () => {
-        if (currentIndex < competiciones.length - 5) {
-            currentIndex++;
-            actualizarCompeticiones();
-        }
-    });
+    const jugadoresContainer = document.getElementById("jugadores-container");
 
-    function actualizarCompeticiones() {
-        competicionesContainer.innerHTML = competiciones.slice(currentIndex, currentIndex + 5).map((competicion) => `
-            <a href="#" class="competition-card text-center m-2">
-                <img src="${competicion.imagen}" alt="${competicion.nombre}" class="img-fluid mb-2" width="${competicion.width}" height="${competicion.height}">
-            </a>
+    function mostrarJugadoresDestacados() {
+        jugadoresContainer.innerHTML = jugadoresDestacados.map((jugador) => `
+            <div class="jugador-card">
+                <div class="jugador-card-header">
+                    <i class="fa-solid ${jugador.icono}"></i>
+                    <span>${jugador.categoria}</span>
+                </div>
+                <div class="jugador-card-imagen">
+                    <img src="${jugador.imagenJugador}" alt="${jugador.nombre}">
+                    <img src="${jugador.imagenClub}" alt="${jugador.club}" class="jugador-card-escudo">
+                </div>
+                <div class="jugador-card-body text-center">
+                    <h3>${jugador.nombre}</h3>
+                    <p class="jugador-card-club">${jugador.club}</p>
+                    <p class="jugador-card-valor">${jugador.valor}</p>
+                    <p class="jugador-card-unidad">${jugador.unidad}</p>
+                </div>
+            </div>
         `).join('');
     }
+
+    /* ==========================================================
+       NOMBRE DEL USUARIO CONECTADO
+       Lee la sesión guardada por login.html y muestra el nombre en el navbar
+       ========================================================== */
+
+    function mostrarNombreUsuario() {
+        const nombreUsuario = document.getElementById("nombre-usuario");
+        let sesion = null;
+
+        try {
+            sesion = JSON.parse(sessionStorage.getItem("rnfc_sesion"));
+        } catch (error) {
+            sesion = null;
+        }
+
+        if (sesion && sesion.nombre) {
+            nombreUsuario.textContent = sesion.nombre;
+            nombreUsuario.hidden = false;
+        }
+    }
+
+    /* ==========================================================
+       INICIO: se ejecuta al cargar la página
+       ========================================================== */
+
+    mostrarJugadoresDestacados();
+    mostrarNombreUsuario();
 
 </script>
