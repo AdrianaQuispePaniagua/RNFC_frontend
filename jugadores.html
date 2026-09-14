@@ -69,14 +69,22 @@
           <span class="fs-4 ms-2">Jugadores</span>
         </a>
 
-        <div class="d-flex align-items-center gap-3 ms-auto">
-          <!-- Botón de Inicio -->
-          <a href="index.html" class="btn btn-outline-light btn-sm">
+        <!-- Contenedor alineado a la izquierda para los botones de navegación -->
+        <div class="d-flex align-items-center gap-2 me-auto ms-4">
+          <!-- Botón de Inicio reubicado y redimensionado -->
+          <a href="index.html" class="btn btn-outline-light btn-lg fw-bold">
             <i class="bi bi-house-door-fill me-1"></i>Inicio
           </a>
+        </div>
 
+        <div class="d-flex align-items-center gap-3 ms-auto">
           <!-- Información de Sesión -->
           <span class="text-white small fw-bold" id="navInfoUsuario"></span>
+
+          <!-- Botón de Acceder / Iniciar Sesión (visible cuando no hay sesión) -->
+          <a href="login.html" class="btn btn-light btn-sm fw-bold text-rnfc-red" id="btnAcceder">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Acceder
+          </a>
 
           <!-- Botón de Carrito -->
           <button class="btn btn-outline-light position-relative d-none" id="btnAbrirCarrito" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
@@ -143,7 +151,8 @@
         </div>
 
         <!-- Controles de Ordenamiento -->
-        <div class="col-md-3">
+        <div class="row g-3 align-items-end border-top border-light pt-3 mt-1">
+            <div class="col-md-3">
                 <label class="form-label small fw-bold"><i class="bi bi-sort-down me-1"></i>Ordenar resultados por:</label>
                 <select class="form-select rounded-pill px-3" id="filtroOrden">
                   <option value="defecto">Por Defecto</option>
@@ -155,6 +164,7 @@
                   <option value="paisDesc">País de Origen (Z-A)</option>
                 </select>
             </div>
+        </div>
 
       </div>
     </div>
@@ -296,10 +306,12 @@
       const navInfoUsuario = document.getElementById("navInfoUsuario");
       const btnAbrirCarrito = document.getElementById("btnAbrirCarrito");
       const btnRegistrarJugador = document.getElementById("btnRegistrarJugador");
+      const btnAcceder = document.getElementById("btnAcceder");
 
       if (rolActual === "agente" && usuarioActual) {
         btnAbrirCarrito.classList.remove("d-none");
         btnRegistrarJugador.classList.remove("d-none");
+        btnAcceder.classList.add("d-none"); // Oculta botón de acceder si ya inició sesión
 
         let nombreClub = "";
         if (usuarioActual.clubId != null) {
@@ -312,8 +324,11 @@
 
       } else if (rolActual === "visita" && usuarioActual) {
         navInfoUsuario.textContent = usuarioActual.nombre;
+        btnAcceder.classList.add("d-none"); // Oculta botón de acceder si inició sesión como visita
       } else {
-        navInfoUsuario.textContent = "Visita";
+        // No hay sesión
+        navInfoUsuario.textContent = ""; 
+        btnAcceder.classList.remove("d-none");
       }
     }
 
