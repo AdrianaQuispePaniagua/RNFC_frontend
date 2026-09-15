@@ -1,261 +1,459 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle de Competición | RNFC - Registro Nacional de Fútbol Chileno</title>
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- Bootstrap 5.3.3 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <!-- Estilos RNFC -->
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-  <!-- ==========================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Detalle de Competición | RNFC - Registro Nacional de Fútbol Chileno
+    </title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!-- Estilos RNFC -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <!-- ==========================================================
        NAVBAR INSTITUCIONAL RNFC
        ========================================================== -->
-  <nav class="navbar navbar-expand-lg rnfc-navbar navbar-dark sticky-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="competicion.html">
-        <i class="bi bi-shield-shaded fs-3 text-white"></i>
-        <span>RNFC</span>
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="competicion.html">Competiciones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="club.html">Clubes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#posiciones">Posiciones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#fixture">Fixture</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#goleadores">Goleadores</a>
-          </li>
-        </ul>
-
-        <div class="d-flex align-items-center gap-3">
-          <div class="input-group">
-            <input type="search" class="form-control rnfc-search-input" id="buscadorTorneo" placeholder="Buscar club en la tabla..." aria-label="Buscar">
-          </div>
-          <div class="rnfc-avatar-icon" title="Perfil de Usuario">
-            <i class="bi bi-person-fill"></i>
-          </div>
+    <header>
+      <nav class="navbar navbar-expand-lg d-flex justify-content-between">
+        <!-- Logo -->
+        <div>
+          <a class="navbar-brand" href="#">
+            <img
+              src="assets/escudo_rnfc.png"
+              alt="Logo"
+              width="80"
+              height="80"
+              class="d-inline-block align-text-top"
+            />
+          </a>
         </div>
-      </div>
-    </div>
-  </nav>
+        <!-- Enlaces a cada sección -->
+        <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#inicio">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#sobre-nosotros">Quienes somos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#competiciones"
+                id="dropdownCompeticiones"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Competiciones</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="dropdownCompeticiones">
+                <li>
+                  <a class="dropdown-item" href="#competiciones">Ver todas</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Liga de Primera</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Liga de Ascenso</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Liga de Segunda</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Liga Femenina</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Copa Chile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Supercopa de Chile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="competicion.html"
+                    >Copa de la Liga</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#jugadores">Jugadores</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#estadisticas">Estadísticas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contacto">Contacto</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Buscador -->
+        <div>
+          <form class="form-inline my-2 my-lg-0">
+            <input
+              class="form-control mr-sm-1"
+              type="search"
+              placeholder="Buscar jugador, equipo, competición..."
+              aria-label="Search"
+            />
+          </form>
+        </div>
+        <!-- Usuario: nombre (si hay sesión) e ícono para ir al login -->
+        <div class="usuario-container d-flex align-items-center gap-2">
+          <a
+            href="jugadores.html"
+            id="nombre-usuario"
+            class="nombre-usuario"
+            hidden
+          ></a>
+          <a
+            href="#"
+            id="btn-logout"
+            class="btn btn-outline-light rounded-circle"
+            title="Cerrar sesión"
+            hidden
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </a>
+          <a
+            href="login.html"
+            class="btn btn-outline-light rounded-circle"
+            role="button"
+          >
+            <i class="fa-solid fa-user"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
 
-  <!-- ==========================================================
+    <!-- ==========================================================
        CONTENIDO PRINCIPAL
        ========================================================== -->
-  <main class="container py-4">
+    <main class="container py-4">
+      <!-- Banner Hero del Campeonato -->
+      <section class="rnfc-hero-banner p-4 p-md-5 mb-4">
+        <div class="row align-items-center g-4">
+          <div class="col-auto text-center">
+            <div
+              class="bg-white p-2 rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center"
+              style="width: 85px; height: 85px"
+            >
+              <i class="bi bi-trophy-fill text-warning fs-1"></i>
+            </div>
+          </div>
 
-    <!-- Banner Hero del Campeonato -->
-    <section class="rnfc-hero-banner p-4 p-md-5 mb-4">
-      <div class="row align-items-center g-4">
-        
-        <div class="col-auto text-center">
-          <div class="bg-white p-2 rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center" style="width: 85px; height: 85px;">
-            <i class="bi bi-trophy-fill text-warning fs-1"></i>
+          <div class="col">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+              <span class="badge bg-warning text-dark fw-bold"
+                >Temporada Oficial 2026</span
+              >
+              <span
+                class="badge bg-light text-dark fw-bold"
+                id="badgeOrganizador"
+                >ANFP Chile</span
+              >
+            </div>
+            <h1 class="h2 fw-bold text-white mb-1" id="tituloCompeticion">
+              Campeonato Nacional Primera División
+            </h1>
+            <p class="text-white-50 mb-3 fs-6" id="descCompeticion">
+              Máxima categoría del fútbol profesional chileno.
+            </p>
+
+            <!-- Chips informativos -->
+            <div class="d-flex flex-wrap gap-2">
+              <div class="rnfc-stat-chip">
+                <small class="d-block text-white-50">Jornada Actual</small>
+                <strong class="text-white small" id="chipFechaActual"
+                  >Fecha 8 de 30</strong
+                >
+              </div>
+              <div class="rnfc-stat-chip">
+                <small class="d-block text-white-50"
+                  >Equipos Participantes</small
+                >
+                <strong class="text-white small">16 Clubes</strong>
+              </div>
+              <div class="rnfc-stat-chip">
+                <small class="d-block text-white-50">Sistema</small>
+                <strong class="text-white small"
+                  >Liga Todos vs Todos (Ida y Vuelta)</strong
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layout en 2 Columnas -->
+      <div class="row g-4">
+        <!-- Columna Principal: Tabla de Posiciones -->
+        <div class="col-lg-8" id="posiciones">
+          <div class="card mb-4">
+            <div
+              class="card-header card-header-rnfc d-flex flex-wrap justify-content-between align-items-center gap-2"
+            >
+              <div>
+                <h2 class="h5 mb-0 fw-bold">
+                  <i class="bi bi-table text-danger me-2"></i>Tabla de
+                  Posiciones
+                </h2>
+                <small class="text-secondary"
+                  >Actualizado tras la Fecha 8</small
+                >
+              </div>
+
+              <!-- Leyenda de Zonas de Clasificación -->
+              <div class="d-flex flex-wrap gap-3 small">
+                <span class="d-flex align-items-center gap-1">
+                  <span
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #16a34a;
+                      border-radius: 2px;
+                    "
+                  ></span>
+                  <span class="text-secondary">Copa Libertadores</span>
+                </span>
+                <span class="d-flex align-items-center gap-1">
+                  <span
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #0284c7;
+                      border-radius: 2px;
+                    "
+                  ></span>
+                  <span class="text-secondary">Copa Sudamericana</span>
+                </span>
+                <span class="d-flex align-items-center gap-1">
+                  <span
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #dc2626;
+                      border-radius: 2px;
+                    "
+                  ></span>
+                  <span class="text-secondary">Descenso</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table
+                  class="table table-hover align-middle mb-0 table-standings"
+                >
+                  <thead>
+                    <tr>
+                      <th class="text-center" style="width: 50px">Pos</th>
+                      <th>Club</th>
+                      <th class="text-center" title="Partidos Jugados">PJ</th>
+                      <th class="text-center" title="Partidos Ganados">PG</th>
+                      <th class="text-center" title="Partidos Empatados">PE</th>
+                      <th class="text-center" title="Partidos Perdidos">PP</th>
+                      <th class="text-center" title="Goles a Favor">GF</th>
+                      <th class="text-center" title="Goles en Contra">GC</th>
+                      <th class="text-center" title="Diferencia de Goles">
+                        DIF
+                      </th>
+                      <th class="text-center fw-bold" title="Puntos">PTS</th>
+                      <th class="text-center d-none d-md-table-cell">
+                        Últimos 5
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTablaPosiciones">
+                    <!-- Renderizado dinámicamente con JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer bg-light small text-secondary">
+              <i class="bi bi-info-circle me-1"></i> Haz clic en el nombre de
+              cualquier club para ver su ficha técnica institucional y plantilla
+              completa.
+            </div>
+          </div>
+
+          <!-- Reglas de Clasificación -->
+          <div class="card">
+            <div class="card-header card-header-rnfc">
+              <h3 class="h6 mb-0 fw-bold">
+                <i class="bi bi-award-fill text-warning me-2"></i>Criterios de
+                Clasificación y Premios 2026
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="row g-3" id="contenedorReglas">
+                <!-- Renderizado dinámico -->
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col">
-          <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-            <span class="badge bg-warning text-dark fw-bold">Temporada Oficial 2026</span>
-            <span class="badge bg-light text-dark fw-bold" id="badgeOrganizador">ANFP Chile</span>
-          </div>
-          <h1 class="h2 fw-bold text-white mb-1" id="tituloCompeticion">Campeonato Nacional Primera División</h1>
-          <p class="text-white-50 mb-3 fs-6" id="descCompeticion">Máxima categoría del fútbol profesional chileno.</p>
+        <!-- Columna Lateral: Fixture / Jornadas y Goleadores -->
+        <div class="col-lg-4">
+          <!-- Fixture y Resultados de la Fecha -->
+          <div class="card mb-4" id="fixture">
+            <div
+              class="card-header card-header-rnfc d-flex justify-content-between align-items-center"
+            >
+              <h3 class="h6 mb-0 fw-bold">
+                <i class="bi bi-calendar-event-fill text-primary me-2"></i
+                >Fixture / Jornadas
+              </h3>
 
-          <!-- Chips informativos -->
-          <div class="d-flex flex-wrap gap-2">
-            <div class="rnfc-stat-chip">
-              <small class="d-block text-white-50">Jornada Actual</small>
-              <strong class="text-white small" id="chipFechaActual">Fecha 8 de 30</strong>
+              <!-- Selector de Fecha -->
+              <div
+                class="btn-group btn-group-sm"
+                id="selectorJornadas"
+                role="group"
+              >
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-fecha="7"
+                >
+                  F7
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-dark active"
+                  data-fecha="8"
+                >
+                  F8
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-fecha="9"
+                >
+                  F9
+                </button>
+              </div>
             </div>
-            <div class="rnfc-stat-chip">
-              <small class="d-block text-white-50">Equipos Participantes</small>
-              <strong class="text-white small">16 Clubes</strong>
+
+            <div class="card-body p-2" id="contenedorPartidos">
+              <!-- Renderizado dinámico de partidos de la fecha -->
             </div>
-            <div class="rnfc-stat-chip">
-              <small class="d-block text-white-50">Sistema</small>
-              <strong class="text-white small">Liga Todos vs Todos (Ida y Vuelta)</strong>
+          </div>
+
+          <!-- Tabla de Goleadores -->
+          <div class="card" id="goleadores">
+            <div class="card-header card-header-rnfc">
+              <h3 class="h6 mb-0 fw-bold">
+                <i class="bi bi-bullseye text-danger me-2"></i>Tabla de
+                Goleadores
+              </h3>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table
+                  class="table table-sm table-hover align-middle mb-0 small"
+                >
+                  <thead class="table-light">
+                    <tr>
+                      <th class="text-center" style="width: 35px">#</th>
+                      <th>Jugador</th>
+                      <th>Club</th>
+                      <th class="text-center">Penal</th>
+                      <th class="text-end pe-3">Goles</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTablaGoleadores">
+                    <!-- Renderizado dinámico de goleadores -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-    </section>
+    </main>
 
-    <!-- Layout en 2 Columnas -->
-    <div class="row g-4">
-      
-      <!-- Columna Principal: Tabla de Posiciones -->
-      <div class="col-lg-8" id="posiciones">
-        <div class="card mb-4">
-          <div class="card-header card-header-rnfc d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div>
-              <h2 class="h5 mb-0 fw-bold"><i class="bi bi-table text-danger me-2"></i>Tabla de Posiciones</h2>
-              <small class="text-secondary">Actualizado tras la Fecha 8</small>
-            </div>
-
-            <!-- Leyenda de Zonas de Clasificación -->
-            <div class="d-flex flex-wrap gap-3 small">
-              <span class="d-flex align-items-center gap-1">
-                <span style="display:inline-block; width:12px; height:12px; background:#16a34a; border-radius:2px;"></span>
-                <span class="text-secondary">Copa Libertadores</span>
-              </span>
-              <span class="d-flex align-items-center gap-1">
-                <span style="display:inline-block; width:12px; height:12px; background:#0284c7; border-radius:2px;"></span>
-                <span class="text-secondary">Copa Sudamericana</span>
-              </span>
-              <span class="d-flex align-items-center gap-1">
-                <span style="display:inline-block; width:12px; height:12px; background:#dc2626; border-radius:2px;"></span>
-                <span class="text-secondary">Descenso</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-hover align-middle mb-0 table-standings">
-                <thead>
-                  <tr>
-                    <th class="text-center" style="width: 50px;">Pos</th>
-                    <th>Club</th>
-                    <th class="text-center" title="Partidos Jugados">PJ</th>
-                    <th class="text-center" title="Partidos Ganados">PG</th>
-                    <th class="text-center" title="Partidos Empatados">PE</th>
-                    <th class="text-center" title="Partidos Perdidos">PP</th>
-                    <th class="text-center" title="Goles a Favor">GF</th>
-                    <th class="text-center" title="Goles en Contra">GC</th>
-                    <th class="text-center" title="Diferencia de Goles">DIF</th>
-                    <th class="text-center fw-bold" title="Puntos">PTS</th>
-                    <th class="text-center d-none d-md-table-cell">Últimos 5</th>
-                  </tr>
-                </thead>
-                <tbody id="cuerpoTablaPosiciones">
-                  <!-- Renderizado dinámicamente con JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="card-footer bg-light small text-secondary">
-            <i class="bi bi-info-circle me-1"></i> Haz clic en el nombre de cualquier club para ver su ficha técnica institucional y plantilla completa.
-          </div>
-        </div>
-
-        <!-- Reglas de Clasificación -->
-        <div class="card">
-          <div class="card-header card-header-rnfc">
-            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-award-fill text-warning me-2"></i>Criterios de Clasificación y Premios 2026</h3>
-          </div>
-          <div class="card-body">
-            <div class="row g-3" id="contenedorReglas">
-              <!-- Renderizado dinámico -->
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Columna Lateral: Fixture / Jornadas y Goleadores -->
-      <div class="col-lg-4">
-        
-        <!-- Fixture y Resultados de la Fecha -->
-        <div class="card mb-4" id="fixture">
-          <div class="card-header card-header-rnfc d-flex justify-content-between align-items-center">
-            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-calendar-event-fill text-primary me-2"></i>Fixture / Jornadas</h3>
-            
-            <!-- Selector de Fecha -->
-            <div class="btn-group btn-group-sm" id="selectorJornadas" role="group">
-              <button type="button" class="btn btn-outline-secondary" data-fecha="7">F7</button>
-              <button type="button" class="btn btn-dark active" data-fecha="8">F8</button>
-              <button type="button" class="btn btn-outline-secondary" data-fecha="9">F9</button>
-            </div>
-          </div>
-
-          <div class="card-body p-2" id="contenedorPartidos">
-            <!-- Renderizado dinámico de partidos de la fecha -->
-          </div>
-        </div>
-
-        <!-- Tabla de Goleadores -->
-        <div class="card" id="goleadores">
-          <div class="card-header card-header-rnfc">
-            <h3 class="h6 mb-0 fw-bold"><i class="bi bi-bullseye text-danger me-2"></i>Tabla de Goleadores</h3>
-          </div>
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-sm table-hover align-middle mb-0 small">
-                <thead class="table-light">
-                  <tr>
-                    <th class="text-center" style="width: 35px;">#</th>
-                    <th>Jugador</th>
-                    <th>Club</th>
-                    <th class="text-center">Penal</th>
-                    <th class="text-end pe-3">Goles</th>
-                  </tr>
-                </thead>
-                <tbody id="cuerpoTablaGoleadores">
-                  <!-- Renderizado dinámico de goleadores -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- ==========================================================
+    <!-- ==========================================================
        FOOTER INSTITUCIONAL RNFC
        ========================================================== -->
-  <footer class="rnfc-footer mt-auto py-4 border-top">
-    <div class="container text-center text-md-start">
-      <div class="row g-3 align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 justify-content-center justify-content-md-start">
-            <i class="bi bi-shield-shaded fs-4 text-danger"></i>
-            <span class="fw-bold text-white">Registro Nacional de Fútbol Chileno (RNFC)</span>
+    <footer class="rnfc-footer mt-auto py-4 border-top">
+      <div class="container text-center text-md-start">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-6">
+            <div
+              class="d-flex align-items-center gap-2 justify-content-center justify-content-md-start"
+            >
+              <i class="bi bi-shield-shaded fs-4 text-danger"></i>
+              <span class="fw-bold text-white"
+                >Registro Nacional de Fútbol Chileno (RNFC)</span
+              >
+            </div>
+            <p class="text-secondary small mb-0 mt-1">
+              Plataforma oficial para la consulta de clubes, competiciones y
+              futbolistas del fútbol profesional chileno.
+            </p>
           </div>
-          <p class="text-secondary small mb-0 mt-1">Plataforma oficial para la consulta de clubes, competiciones y futbolistas del fútbol profesional chileno.</p>
-        </div>
-        <div class="col-md-6 text-center text-md-end">
-          <div class="d-flex gap-3 justify-content-center justify-content-md-end mb-2">
-            <a href="competicion.html">Competiciones</a>
-            <a href="club.html">Clubes</a>
-            <a href="#">Privacidad</a>
-            <a href="#">Términos</a>
+          <div class="col-md-6 text-center text-md-end">
+            <div
+              class="d-flex gap-3 justify-content-center justify-content-md-end mb-2"
+            >
+              <a href="competicion.html">Competiciones</a>
+              <a href="club.html">Clubes</a>
+              <a href="#">Privacidad</a>
+              <a href="#">Términos</a>
+            </div>
+            <small class="text-secondary"
+              >&copy; 2026 RNFC. Proyecto Académico FullStack 2.</small
+            >
           </div>
-          <small class="text-secondary">&copy; 2026 RNFC. Proyecto Académico FullStack 2.</small>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Scripts: Bootstrap JS, Seeders y Lógica de Competición -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/seeders.js"></script>
-  <script src="js/competicion.js"></script>
-</body>
+    <!-- Scripts: Bootstrap JS, Seeders y Lógica de Competición -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/seeders.js"></script>
+    <script src="js/competicion.js"></script>
+  </body>
 </html>

@@ -272,6 +272,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function mostrarNombreUsuario() {
+    const nombreUsuario = document.getElementById("nombre-usuario");
+    let sesion = null;
+
+    try {
+      sesion = JSON.parse(sessionStorage.getItem("rnfc_sesion"));
+    } catch (error) {
+      sesion = null;
+    }
+
+    if (sesion && sesion.nombre) {
+      nombreUsuario.textContent = sesion.nombre;
+      nombreUsuario.hidden = false;
+
+      // Si el usuario tiene club (agentes), se envía su id en la URL
+      if (sesion.clubId != null) {
+        nombreUsuario.href = `jugadores.html?club=${sesion.clubId}`;
+      }
+    }
+  }
+
   // Renderizar al inicio
+  mostrarNombreUsuario();
   renderizarTodo();
 });

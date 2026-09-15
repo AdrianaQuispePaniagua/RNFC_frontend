@@ -60,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.title = `${competicion.nombre} ${competicion.temporada} | RNFC`;
 
     const elTitulo = document.getElementById("tituloCompeticion");
-    if (elTitulo) elTitulo.textContent = `${competicion.nombre} ${competicion.temporada}`;
+    if (elTitulo)
+      elTitulo.textContent = `${competicion.nombre} ${competicion.temporada}`;
 
     const elDesc = document.getElementById("descCompeticion");
     if (elDesc) elDesc.textContent = competicion.descripcion;
@@ -69,7 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (elOrganizador) elOrganizador.textContent = competicion.organizador;
 
     const elChipFecha = document.getElementById("chipFechaActual");
-    if (elChipFecha) elChipFecha.textContent = `Fecha ${competicion.fechaActual} de ${competicion.totalFechas}`;
+    if (elChipFecha)
+      elChipFecha.textContent = `Fecha ${competicion.fechaActual} de ${competicion.totalFechas}`;
   }
 
   function renderizarTablaPosiciones() {
@@ -106,18 +108,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Generar puntos de racha reciente
-      const dotsForma = fila.forma.map((res) => {
-        let letra = "E";
-        let clase = "draw";
-        if (res === "W") {
-          letra = "V";
-          clase = "win";
-        } else if (res === "L") {
-          letra = "D";
-          clase = "loss";
-        }
-        return `<span class="form-dot ${clase}" title="${letra === 'V' ? 'Victoria' : letra === 'D' ? 'Derrota' : 'Empate'}">${letra}</span>`;
-      }).join("");
+      const dotsForma = fila.forma
+        .map((res) => {
+          let letra = "E";
+          let clase = "draw";
+          if (res === "W") {
+            letra = "V";
+            clase = "win";
+          } else if (res === "L") {
+            letra = "D";
+            clase = "loss";
+          }
+          return `<span class="form-dot ${clase}" title="${letra === "V" ? "Victoria" : letra === "D" ? "Derrota" : "Empate"}">${letra}</span>`;
+        })
+        .join("");
 
       // Enlace a detalle de club si existe en los seeders
       const hrefClub = `club.html?id=${fila.clubId}`;
@@ -139,8 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="text-center text-secondary">${fila.pp}</td>
         <td class="text-center text-secondary">${fila.gf}</td>
         <td class="text-center text-secondary">${fila.gc}</td>
-        <td class="text-center ${fila.dif > 0 ? 'text-success fw-semibold' : fila.dif < 0 ? 'text-danger' : 'text-secondary'}">
-          ${fila.dif > 0 ? '+' + fila.dif : fila.dif}
+        <td class="text-center ${fila.dif > 0 ? "text-success fw-semibold" : fila.dif < 0 ? "text-danger" : "text-secondary"}">
+          ${fila.dif > 0 ? "+" + fila.dif : fila.dif}
         </td>
         <td class="text-center fw-bold fs-6 text-primary">${fila.pts}</td>
         <td class="text-center d-none d-md-table-cell text-nowrap">${dotsForma}</td>
@@ -187,7 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "card fixture-card mb-2 p-2 shadow-none border";
 
       const esJugado = p.estado === "Finalizado";
-      const badgeEstadoClass = esJugado ? "bg-success-subtle text-success" : "bg-primary-subtle text-primary";
+      const badgeEstadoClass = esJugado
+        ? "bg-success-subtle text-success"
+        : "bg-primary-subtle text-primary";
 
       card.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-1">
@@ -233,6 +239,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function mostrarNombreUsuario() {
+    const nombreUsuario = document.getElementById("nombre-usuario");
+    let sesion = null;
+
+    try {
+      sesion = JSON.parse(sessionStorage.getItem("rnfc_sesion"));
+    } catch (error) {
+      sesion = null;
+    }
+
+    if (sesion && sesion.nombre) {
+      nombreUsuario.textContent = sesion.nombre;
+      nombreUsuario.hidden = false;
+
+      // Si el usuario tiene club (agentes), se envía su id en la URL
+      if (sesion.clubId != null) {
+        nombreUsuario.href = `jugadores.html?club=${sesion.clubId}`;
+      }
+    }
+  }
+
   // Renderizar al cargar
+  mostrarNombreUsuario();
   renderizarTodo();
 });
