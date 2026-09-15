@@ -530,10 +530,21 @@
 
       /**
        * @function agregarAlCarrito
-       * @description Ingresa un jugador a la lista de fichajes pendientes.
+       * @description Ingresa un jugador a la lista de fichajes pendientes validando el límite de plantilla.
+       * @param {number} id - ID del jugador.
        */
       function agregarAlCarrito(id) {
         if (rolActual !== "agente" || !usuarioActual) return;
+        
+        const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
+        if (!clubDelAgente) return;
+
+        // Regla de negocio: Límite máximo de 26 jugadores por club (Plantilla actual + Carrito)
+        if (clubDelAgente.plantilla.length + carrito.length >= 26) {
+          alert("Límite de plantilla alcanzado. Un club no puede tener más de 26 jugadores.");
+          return;
+        }
+
         const jugador = mercado.find(j => j.id === id);
         if (jugador && jugador.disponible && !carrito.some(item => item.id === id)) {
           carrito.push(jugador);
@@ -635,6 +646,14 @@
         const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
         if (!clubDelAgente) return;
 
+        // Regla de negocio: Límite máximo de 26 jugadores por club
+        if (clubDelAgente.plantilla.length >= 26) {
+          alert("Operación denegada. Tu club ya alcanzó el límite máximo de 26 jugadores permitidos.");
+          bootstrap.Modal.getInstance(document.getElementById('modalRegistrarJugador')).hide();
+          form.reset();
+          return;
+        }
+
         const dorsalGenerado = obtenerDorsalDisponible(clubDelAgente.plantilla);
         const nuevoPais = document.getElementById("nuevoPais").value.trim();
 
@@ -693,8 +712,7 @@
 
       /**
        * @function aplicarFiltroClubDesdeUrl
-       * @description Si la URL trae ?club=ID (por ejemplo desde el nombre en el navbar de index.html),
-       * preselecciona ese club en el filtro.
+       * @description Si la URL trae ?club=ID, preselecciona ese club en el filtro.
        */
       function aplicarFiltroClubDesdeUrl() {
         const parametros = new URLSearchParams(window.location.search);
