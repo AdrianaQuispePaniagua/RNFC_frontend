@@ -3,9 +3,9 @@
    ========================================================== */
 
 :root {
-  --rnfc-primary: #7a0000e9;
-  --rnfc-primary-dark: #580d0d;
-  --rnfc-primary-light: #8e1c1c;
+  --rnfc-primary: #e00000;
+  --rnfc-primary-dark: #c00000;
+  --rnfc-primary-light: #7a0000;
   --rnfc-blue: #0b1a30;
   --rnfc-accent-blue: #0056b3;
   --rnfc-badge-portero: #ffc107;
@@ -81,7 +81,7 @@ main {
 }
 
 /* ==========================================================
-   BANNERS / HERO HEADERS
+   BANNERS / HERO HEADERS 
    ========================================================== */
 .rnfc-hero-banner {
   background: linear-gradient(135deg, var(--rnfc-primary) 0%, var(--rnfc-blue) 100%);
