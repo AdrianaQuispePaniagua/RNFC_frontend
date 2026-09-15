@@ -262,6 +262,76 @@
     </div>
   </div>
 
+  <!-- Modal de Edición de Jugador -->
+  <div class="modal fade" id="modalEditarJugador" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square text-primary me-2"></i>Editar Jugador</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formEditarJugador">
+            <input type="hidden" id="editarId">
+            
+            <div class="mb-3">
+              <label class="form-label">Nombre completo</label>
+              <input type="text" class="form-control" id="editarNombre" required>
+            </div>
+            
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label">Edad</label>
+                <input type="number" class="form-control" id="editarEdad" min="15" max="45" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Posición</label>
+                <select class="form-select" id="editarPosicion" required>
+                  <option value="Portero">Portero</option>
+                  <option value="Defensa">Defensa</option>
+                  <option value="Mediocampista">Mediocampista</option>
+                  <option value="Delantero">Delantero</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row g-3 mt-0">
+              <div class="col-6">
+                <label class="form-label">Pie Dominante</label>
+                <select class="form-select" id="editarPie" required>
+                  <option value="Diestro">Diestro</option>
+                  <option value="Zurdo">Zurdo</option>
+                  <option value="Ambidiestro">Ambidiestro</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label">País de Origen</label>
+                <input type="text" class="form-control" id="editarPais" required>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label class="form-label">Valor de Pase (CLP)</label>
+              <input type="number" class="form-control" id="editarPrecio" min="0" step="100000" required>
+            </div>
+            
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="editarTransferible">
+              <label class="form-check-label" for="editarTransferible">Disponible para transferencia</label>
+            </div>
+          </form>
+          <div class="alert alert-secondary mt-3 small mb-0 py-2">
+            <i class="bi bi-info-circle me-1"></i>El dorsal y estadísticas actuales se mantendrán intactas.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnActualizarJugador">Actualizar Datos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Offcanvas del Carrito -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
     <div class="offcanvas-header border-bottom">
@@ -486,8 +556,14 @@
         }
 
         filtrados.forEach(j => {
+          // Evalúa si el agente puede comprar este jugador
           const mostrarBtnCompra = rolActual === "agente" && !!usuarioActual &&
             j.disponible && j.clubActualId !== usuarioActual.clubId;
+          
+          // Evalúa si el agente es dueño del jugador para editarlo/eliminarlo
+          const esMiJugador = rolActual === "agente" && !!usuarioActual && 
+            j.clubActualId === usuarioActual.clubId;
+            
           const enCarrito = carrito.some(item => item.id === j.id);
 
           const col = document.createElement("div");
@@ -495,7 +571,7 @@
 
           col.innerHTML = `
             <div class="card h-100 player-card border-0 shadow-sm">
-              <div class="card-body">
+              <div class="card-body d-flex flex-column">
                 <div class="d-flex justify-content-between mb-2">
                   <span class="badge bg-rnfc-red">${j.posicion}</span>
                   ${j.disponible ? '<span class="badge bg-success">Transferible</span>' : '<span class="badge bg-secondary">No Transferible</span>'}
@@ -503,7 +579,7 @@
                 <h5 class="card-title fw-bold mb-0">${j.nombre} <span class="text-secondary ms-1">#${j.dorsal}</span></h5>
                 <p class="text-secondary small mb-2">${j.clubNombre} · ${j.paisOrigen}</p>
 
-                <ul class="list-group list-group-flush small mb-3">
+                <ul class="list-group list-group-flush small mb-3 flex-grow-1">
                   <li class="list-group-item px-0 d-flex justify-content-between"><span>Pie Dominante:</span> <strong>${j.pie}</strong></li>
                   <li class="list-group-item px-0 d-flex justify-content-between"><span>Edad:</span> <strong>${j.edad} años</strong></li>
                   <li class="list-group-item px-0 d-flex justify-content-between text-success">
@@ -512,9 +588,21 @@
                 </ul>
 
                 ${mostrarBtnCompra ?
-                  `<button class="btn w-100 fw-bold ${enCarrito ? 'btn-secondary disabled' : 'btn-outline-rnfc'} btn-comprar" data-id="${j.id}">
+                  `<button class="btn w-100 fw-bold ${enCarrito ? 'btn-secondary disabled' : 'btn-outline-rnfc'} btn-comprar mt-auto" data-id="${j.id}">
                     ${enCarrito ? '<i class="bi bi-check-lg"></i> En el carrito' : '<i class="bi bi-cart-plus"></i> Fichar'}
                   </button>`
+                  : ''
+                }
+                
+                ${esMiJugador ?
+                  `<div class="d-flex gap-2 mt-auto">
+                    <button class="btn btn-outline-primary w-50 fw-bold btn-editar" data-id="${j.id}" data-bs-toggle="modal" data-bs-target="#modalEditarJugador">
+                      <i class="bi bi-pencil-square"></i> Editar
+                    </button>
+                    <button class="btn btn-outline-danger w-50 fw-bold btn-eliminar" data-id="${j.id}">
+                      <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                  </div>`
                   : ''
                 }
               </div>
@@ -523,8 +611,17 @@
           contenedor.appendChild(col);
         });
 
+        // Asignación de listeners para botones generados dinámicamente
         document.querySelectorAll(".btn-comprar").forEach(btn => {
           btn.addEventListener("click", (e) => agregarAlCarrito(Number(e.currentTarget.dataset.id)));
+        });
+
+        document.querySelectorAll(".btn-editar").forEach(btn => {
+          btn.addEventListener("click", (e) => prepararEdicionJugador(Number(e.currentTarget.dataset.id)));
+        });
+
+        document.querySelectorAll(".btn-eliminar").forEach(btn => {
+          btn.addEventListener("click", (e) => eliminarJugador(Number(e.currentTarget.dataset.id)));
         });
       }
 
@@ -539,7 +636,6 @@
         const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
         if (!clubDelAgente) return;
 
-        // Regla de negocio: Límite máximo de 26 jugadores por club (Plantilla actual + Carrito)
         if (clubDelAgente.plantilla.length + carrito.length >= 26) {
           alert("Límite de plantilla alcanzado. Un club no puede tener más de 26 jugadores.");
           return;
@@ -562,6 +658,53 @@
         actualizarCarrito();
         renderizarMercado();
       };
+
+      /**
+       * @function eliminarJugador
+       * @description Elimina permanentemente a un jugador del club y del mercado.
+       * @param {number} id - ID del jugador.
+       */
+      function eliminarJugador(id) {
+        if (rolActual !== "agente" || !usuarioActual) return;
+        
+        const confirmacion = confirm("⚠️ ¡Atención! Eliminar a este jugador es un cambio permanente. ¿Deseas continuar?");
+        if (!confirmacion) return;
+
+        // Eliminar de la plantilla del club
+        const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
+        if (clubDelAgente) {
+          clubDelAgente.plantilla = clubDelAgente.plantilla.filter(j => j.id !== id);
+        }
+
+        // Eliminar del mercado global y del carrito si estuviera (por precaución)
+        mercado = mercado.filter(j => j.id !== id);
+        carrito = carrito.filter(item => item.id !== id);
+
+        // Guardar cambios y renderizar
+        localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
+        actualizarCarrito();
+        renderizarMercado();
+        alert("Jugador eliminado exitosamente del sistema.");
+      }
+
+      /**
+       * @function prepararEdicionJugador
+       * @description Busca los datos actuales del jugador y los pre-carga en el formulario del modal.
+       * @param {number} id - ID del jugador.
+       */
+      function prepararEdicionJugador(id) {
+        const jugador = mercado.find(j => j.id === id);
+        if (!jugador) return;
+
+        document.getElementById("editarId").value = jugador.id;
+        document.getElementById("editarNombre").value = jugador.nombre;
+        document.getElementById("editarEdad").value = jugador.edad;
+        document.getElementById("editarPosicion").value = jugador.posicion;
+        document.getElementById("editarPie").value = jugador.pie;
+        document.getElementById("editarPais").value = jugador.paisOrigen;
+        document.getElementById("editarPrecio").value = jugador.precio;
+        document.getElementById("editarTransferible").checked = jugador.disponible;
+      }
 
       /**
        * @function actualizarCarrito
@@ -646,7 +789,6 @@
         const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
         if (!clubDelAgente) return;
 
-        // Regla de negocio: Límite máximo de 26 jugadores por club
         if (clubDelAgente.plantilla.length >= 26) {
           alert("Operación denegada. Tu club ya alcanzó el límite máximo de 26 jugadores permitidos.");
           bootstrap.Modal.getInstance(document.getElementById('modalRegistrarJugador')).hide();
@@ -695,6 +837,61 @@
       });
 
       /**
+       * Listener del formulario de edición de un jugador existente.
+       */
+      document.getElementById("btnActualizarJugador").addEventListener("click", () => {
+        if (rolActual !== "agente" || !usuarioActual) return;
+        
+        const form = document.getElementById("formEditarJugador");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const idEdicion = Number(document.getElementById("editarId").value);
+        const jugadorMercado = mercado.find(j => j.id === idEdicion);
+        const clubDelAgente = clubesData.find(c => c.id === usuarioActual.clubId);
+        
+        if (jugadorMercado && clubDelAgente) {
+          const jugadorPlantilla = clubDelAgente.plantilla.find(j => j.id === idEdicion);
+          
+          if(jugadorPlantilla) {
+            const nuevoPais = document.getElementById("editarPais").value.trim();
+            
+            // Actualizar datos en la variable global del mercado
+            jugadorMercado.nombre = document.getElementById("editarNombre").value.trim();
+            jugadorMercado.edad = Number(document.getElementById("editarEdad").value);
+            jugadorMercado.posicion = document.getElementById("editarPosicion").value;
+            jugadorMercado.pie = document.getElementById("editarPie").value;
+            jugadorMercado.paisOrigen = nuevoPais;
+            jugadorMercado.precio = Number(document.getElementById("editarPrecio").value);
+            jugadorMercado.disponible = document.getElementById("editarTransferible").checked;
+
+            // Replicar los cambios exactos a la copia dentro de la plantilla del club
+            Object.assign(jugadorPlantilla, jugadorMercado);
+
+            // Si se agregó un país nuevo, actualizar el filtro
+            if(!paisesUnicos.has(nuevoPais)){
+                paisesUnicos.add(nuevoPais);
+                const selectPais = document.getElementById("filtroPais");
+                const option = document.createElement("option");
+                option.value = nuevoPais;
+                option.textContent = nuevoPais;
+                selectPais.appendChild(option);
+            }
+
+            // Guardar, cerrar y refrescar
+            localStorage.setItem("rnfc_clubs", JSON.stringify(clubesData));
+            form.reset();
+            bootstrap.Modal.getInstance(document.getElementById('modalEditarJugador')).hide();
+            renderizarMercado();
+            
+            alert("¡Los datos del jugador han sido actualizados correctamente!");
+          }
+        }
+      });
+
+      /**
        * Listener para cerrar la sesión actual.
        */
       document.getElementById("btnCerrarSesion").addEventListener("click", () => {
@@ -702,6 +899,7 @@
         window.location.reload();
       });
 
+      // Asignación de Listeners para la barra de filtros
       document.getElementById("filtroTexto").addEventListener("input", renderizarMercado);
       document.getElementById("filtroClub").addEventListener("change", renderizarMercado);
       document.getElementById("filtroPais").addEventListener("change", renderizarMercado);
