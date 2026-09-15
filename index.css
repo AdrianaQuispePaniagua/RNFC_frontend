@@ -122,6 +122,11 @@ html {
     font-weight: 600;
 }
 
+.feature-card {
+    width: 30%;
+    min-width: 260px;
+}
+
 /* ==========================================================
    SECCIÓN COMPETICIONES (CARRUSEL INFINITO)
    La "ventana" muestra 5 tarjetas y la "pista" se desliza dentro
@@ -244,6 +249,118 @@ html {
     margin-bottom: 0;
 }
 
+/* Botón de cerrar sesión (x) al lado del nombre en el navbar */
+#btn-logout {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* ==========================================================
+   SECCIÓN ESTADÍSTICAS
+   Cards de rankings: Goleadores, Asistencias, tarjetas
+   ========================================================== */
+.estadisticas-seccion {
+    background-color: #f4f4f9;
+    font-family: 'Roboto', sans-serif;
+}
+
+.estadistica-card {
+    width: 300px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Franja superior con la categoría */
+.estadistica-card-header {
+    background-image: var(--rojo-degradado);
+    color: #ffffff;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.estadistica-card-body {
+    padding: 0.5rem 1rem;
+}
+
+/* Fila de cada jugador */
+.estadistica-fila {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.estadistica-fila:last-child {
+    border-bottom: none;
+}
+
+/* Posición (1, 2, 3...) */
+.estadistica-posicion {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #140083;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 50%;
+}
+
+/* Nombre y club del jugador */
+.estadistica-nombre {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.estadistica-nombre strong {
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.estadistica-nombre small {
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+/* Valor de la estadística */
+.estadistica-valor {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.estadistica-valor strong {
+    font-size: 1.15rem;
+    color: #140083;
+    line-height: 1;
+}
+
+.estadistica-valor small {
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    color: #6c757d;
+}
+
 /* ==========================================================
    SECCIÓN CONTACTO
    Formulario con fondo rojo degradado
@@ -281,4 +398,51 @@ html {
     border-radius: 20px;
     font-weight: 600;
     color: #c00000;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   Ajustes para pantallas medianas y pequeñas
+   ========================================================== */
+@media (max-width: 991px) {
+    .hero-seccion {
+        padding: 3rem 2rem;
+    }
+
+    .features-seccion {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-seccion {
+        padding: 2.5rem 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-texto-container {
+        width: 100%;
+    }
+
+    .hero-seccion img {
+        max-width: 200px;
+        height: auto;
+    }
+
+    .features-seccion {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .feature-card {
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 0.5rem 1rem;
+        flex-wrap: wrap;
+    }
+
+    .navbar .form-control {
+        width: 100%;
+    }
 }
