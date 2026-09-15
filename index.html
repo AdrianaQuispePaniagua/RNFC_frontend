@@ -7,6 +7,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <title>Registro Nacional del Fútbol Chileno</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -26,16 +27,27 @@
                         <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#sobre-nosotros">Quienes somos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#competiciones" id="dropdownCompeticiones" role="button" data-bs-toggle="dropdown" aria-expanded="false">Competiciones</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownCompeticiones">
+                            <li><a class="dropdown-item" href="#competiciones">Ver todas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="competicion.html">Liga de Primera</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Liga de Ascenso</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Liga de Segunda</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Liga Femenina</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Copa Chile</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Supercopa de Chile</a></li>
+                            <li><a class="dropdown-item" href="competicion.html">Copa de la Liga</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#jugadores">Jugadores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#competiciones">Competiciones</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#estadisticas">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sobre-nosotros">Sobre Nosotros</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contacto">Contacto</a>
@@ -51,6 +63,9 @@
             <!-- Usuario: nombre (si hay sesión) e ícono para ir al login -->
             <div class="usuario-container d-flex align-items-center gap-2">
                 <a href="jugadores.html" id="nombre-usuario" class="nombre-usuario" hidden></a>
+                <a href="#" id="btn-logout" class="btn btn-outline-light rounded-circle" title="Cerrar sesión" hidden>
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
                 <a href="login.html" class="btn btn-outline-light rounded-circle" role="button">
                     <i class="fa-solid fa-user"></i>
                 </a>
@@ -70,8 +85,9 @@
             </div>
         </section>
         <!-- ============ SECCIÓN SOBRE NOSOTROS: lo que ofrece la plataforma ============ -->
-        <section id="sobre-nosotros" class="features-seccion d-flex justify-content-around align-items-center">
-            <div class="feature-card text-center p-4 my-3 ">
+        <section id="sobre-nosotros" class="features-seccion">
+            <h2 class="text-center my-4 p-3 mx-4">Quienes Somos</h2>
+            <div class="d-flex flex-wrap justify-content-around align-items-center"><div class="feature-card text-center p-4 my-3 ">
                 <i class="fa-solid fa-users fa-3x mb-3"></i>
                 <h3>Jugadores</h3>
                 <p>Accede a información detallada sobre jugadores chilenos, sus estadísticas y trayectoria.</p>
@@ -86,6 +102,7 @@
                 <i class="fa-solid fa-chart-line fa-3x mb-3"></i>
                 <h3>Estadísticas</h3>
                 <p>Explora estadísticas avanzadas y análisis de rendimiento de jugadores y equipos.</p>
+            </div>
             </div>
         </section>
         <!-- ============ SECCIÓN COMPETICIONES: carrusel infinito (se llena desde JS) ============ -->
@@ -107,8 +124,15 @@
         </section>
         <!-- ============ SECCIÓN JUGADORES DESTACADOS: cards (se llenan desde JS) ============ -->
         <section id="jugadores" class="jugadores-destacados-seccion">
-            <h2 id="estadisticas" class="text-start my-4 p-3 mx-4">Jugadores Destacados</h2>
+            <h2 class="text-start my-4 p-3 mx-4">Jugadores Destacados</h2>
             <div id="jugadores-container" class="d-flex justify-content-center gap-4 flex-wrap px-5 pb-5">
+            </div>
+        </section>
+        <!-- ============ SECCIÓN ESTADÍSTICAS: rankings por categoría (se llena desde JS) ============ -->
+        <section id="estadisticas" class="estadisticas-seccion">
+            <h2 class="text-start my-4 p-3 mx-4">Estadísticas</h2>
+            <p class="text-center mx-4">Top 5 de jugadores por categoría.</p>
+            <div id="estadisticas-container" class="d-flex justify-content-center gap-4 flex-wrap px-5 pb-5">
             </div>
         </section>
         <!-- ============ SECCIÓN CONTACTO: formulario ============ -->
@@ -197,7 +221,7 @@
         enMovimiento = true;
 
         // 1. Deslizamos la pista hacia la izquierda
-        transicionCarrusel(-obtenerPaso(), true);
+        transicionCarrusel(-calculoEspacio(), true);
 
         // 2. Al terminar, pasamos la primera tarjeta al final y volvemos a 0 sin animación
         setTimeout(() => {
@@ -213,7 +237,7 @@
 
         // 1. Pasamos la última tarjeta al inicio y corremos la pista sin animación
         competicionesContainer.prepend(competicionesContainer.lastElementChild);
-        transicionCarrusel(-obtenerPaso(), false);
+        transicionCarrusel(-calculoEspacio(), false);
 
         // 2. Forzamos al navegador a aplicar la posición antes de animar
         competicionesContainer.offsetWidth;
@@ -290,6 +314,90 @@
     }
 
     /* ==========================================================
+       ESTADÍSTICAS
+       Top 5 de jugadores por categoría
+       ========================================================== */
+
+    const datosEstadisticas = [
+        {
+            categoria: "Goleadores",
+            icono: "fa-futbol",
+            unidad: "Goles",
+            jugadores: [
+                { posicion: 1, nombre: "Fernando Zampedri", club: "U. Católica", valor: 25 },
+                { posicion: 2, nombre: "Daniel Castro Santibáñez", club: "Deportes Limache", valor: 13 },
+                { posicion: 3, nombre: "Javier Correa", club: "Colo-Colo", valor: 12 },
+                { posicion: 4, nombre: "Alan Medina Silva", club: "Everton", valor: 11 },
+                { posicion: 5, nombre: "Eduardo Vargas", club: "U. de Chile", valor: 9 }
+            ]
+        },
+        {
+            categoria: "Asistencias",
+            icono: "fa-handshake-angle",
+            unidad: "Asist.",
+            jugadores: [
+                { posicion: 1, nombre: "Jean Meneses", club: "Deportes Limache", valor: 9 },
+                { posicion: 1, nombre: "Kevin Méndez", club: "U. La Calera", valor: 9 },
+                { posicion: 3, nombre: "Daniel Castro Santibáñez", club: "Deportes Limache", valor: 7 },
+                { posicion: 3, nombre: "Jeisson Vargas", club: "La Serena", valor: 7 },
+                { posicion: 3, nombre: "Juan Cornejo", club: "Coquimbo Unido", valor: 7 }
+            ]
+        },
+        {
+            categoria: "Tarjetas amarillas",
+            icono: "fa-square",
+            unidad: "T. Amarillas",
+            jugadores: [
+                { posicion: 1, nombre: "Cristián Cuevas", club: "U. Católica", valor: 10 },
+                { posicion: 2, nombre: "Arturo Vidal", club: "Colo-Colo", valor: 8 },
+                { posicion: 2, nombre: "Cristhofer Mesías", club: "Univ. Concepción", valor: 8 },
+                { posicion: 2, nombre: "Daniel Gutiérrez", club: "U. La Calera", valor: 8 },
+                { posicion: 2, nombre: "Felipe Chamorro", club: "La Serena", valor: 8 }
+            ]
+        },
+        {
+            categoria: "Tarjetas rojas",
+            icono: "fa-square-full",
+            unidad: "T. Rojas",
+            jugadores: [
+                { posicion: 1, nombre: "Axel Alfonzo", club: "Deportes Limache", valor: 2 },
+                { posicion: 1, nombre: "Clemente Montes", club: "U. Católica", valor: 2 },
+                { posicion: 1, nombre: "Diego Carrasco Muñoz", club: "Concepción", valor: 2 },
+                { posicion: 1, nombre: "Favian Loyola", club: "Audax Italiano", valor: 2 },
+                { posicion: 1, nombre: "Hugo Magallanes", club: "Everton", valor: 2 }
+            ]
+        }
+    ];
+
+    const estadisticasContainer = document.getElementById("estadisticas-container");
+
+    function mostrarEstadisticas() {
+        estadisticasContainer.innerHTML = datosEstadisticas.map((categoria) => `
+            <div class="estadistica-card">
+                <div class="estadistica-card-header">
+                    <i class="fa-solid ${categoria.icono}"></i>
+                    <span>${categoria.categoria}</span>
+                </div>
+                <div class="estadistica-card-body">
+                    ${categoria.jugadores.map((jugador) => `
+                        <div class="estadistica-fila">
+                            <span class="estadistica-posicion">${jugador.posicion}</span>
+                            <div class="estadistica-nombre">
+                                <strong>${jugador.nombre}</strong>
+                                <small>${jugador.club}</small>
+                            </div>
+                            <div class="estadistica-valor">
+                                <strong>${jugador.valor}</strong>
+                                <small>${categoria.unidad}</small>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    /* ==========================================================
        NOMBRE DEL USUARIO CONECTADO
        Lee la sesión guardada por login.html y muestra el nombre en el navbar.
        Al hacer clic lleva a jugadores.html filtrado por el club del usuario.
@@ -297,6 +405,7 @@
 
     function mostrarNombreUsuario() {
         const nombreUsuario = document.getElementById("nombre-usuario");
+        const btnLogout = document.getElementById("btn-logout");
         let sesion = null;
 
         try {
@@ -308,6 +417,7 @@
         if (sesion && sesion.nombre) {
             nombreUsuario.textContent = sesion.nombre;
             nombreUsuario.hidden = false;
+            btnLogout.hidden = false;
 
             // Si el usuario tiene club (agentes), se envía su id en la URL
             if (sesion.clubId != null) {
@@ -316,11 +426,19 @@
         }
     }
 
+    // Cierra la sesión y recarga la página sin el usuario conectado
+    document.getElementById("btn-logout").addEventListener("click", function (e) {
+        e.preventDefault();
+        sessionStorage.removeItem("rnfc_sesion");
+        window.location.reload();
+    });
+
     /* ==========================================================
        INICIO: se ejecuta al cargar la página
        ========================================================== */
 
     mostrarJugadoresDestacados();
+    mostrarEstadisticas();
     mostrarNombreUsuario();
 
 </script>
